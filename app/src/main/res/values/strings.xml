@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">AnkiLab7</string>
+
+    <string name="question_field">Question: %1$s</string>
+    <string name="example_field">Hint: %1$s</string>
+    <string name="answer_field">Answer: %1$s</string>
+    <string name="translationField">Translation: %1$s</string>
+
+    <string name="adding_card">Adding Card</string>
+    <string name="editing_card">Editing Card</string>
+    <string name="seeing_card">Viewing Card</string>
+
+    <string name="enter_translation">Enter Translation</string>
+    <string name="enter_answer">Enter Answer</string>
+    <string name="enter_example">Enter Example</string>
+    <string name="enter_question">Enter Question</string>
+
+
+    <string name="add_button">addButton</string>
+    <string name="save_button">saveButton</string>
+    <string name="edit_button">editButton</string>
+    <string name="back_button">backButton</string>
+    <string name="current_image_or_placeholder">Current picture or placeholder</string>
+    <string name="delete_icon">Delete icon</string>
+
+    <string name="text_placeholder">i\'m text</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+</resources>

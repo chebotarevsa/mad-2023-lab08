@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AnkiLab7</string>
+
+    <string name="question_field">Вопрос: %1$s</string>
+    <string name="example_field">Подсказка: %1$s</string>
+    <string name="answer_field">Ответ: %1$s</string>
+    <string name="translationField">Перевод: %1$s</string>
+
+    <string name="adding_card">Добавление карточки</string>
+    <string name="editing_card">Редактирование карточки</string>
+    <string name="seeing_card">Просмотр карточки</string>
+
+    <string name="enter_translation">Введите перевод</string>
+    <string name="enter_answer">Введите ответ</string>
+    <string name="enter_example">Введите пример</string>
+    <string name="enter_question">Введите вопрос</string>
+
+
+    <string name="add_button">Кнопка добавления карточки</string>
+    <string name="save_button">Кнопка сохранения карточки</string>
+    <string name="edit_button">Кнопка редактирования карточки</string>
+    <string name="back_button">Кнопка возврата</string>
+
+    <string name="current_image_or_placeholder">Картинка (текущая или заглушка)</string>
+    <string name="text_placeholder">Тут текст</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="delete_icon">Иконка удаления</string>
+
+</resources>
