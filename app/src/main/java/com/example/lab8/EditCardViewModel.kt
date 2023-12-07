@@ -9,10 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.lab8.related_to_data.Card
+import com.example.lab8.related_to_data.CardDatabase
 import kotlinx.coroutines.launch
 
 
-class EditCardViewModel(private val database: CardDatabase, val cardId: Int) : ViewModel() {
+class EditCardViewModel(private val database: CardDatabase, val cardId: String) : ViewModel() {
     private val _dbCard = database.cardDao().findById(cardId)
 
     private var _currentCard: Card? = null
@@ -110,8 +112,8 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: Int) : V
         }
     }
 
-    private fun getEmptyCard() = Card(null, "", "", "", "")
-    fun checkIfNewCard() = cardId == -1
+    private fun getEmptyCard() = Card(question = "", example = "", translation = "", answer = "")
+    fun checkIfNewCard() = cardId == "empty"
 
     private fun checkAllIfNotBlank(
         question: String,
@@ -126,7 +128,7 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: Int) : V
     }
 
     companion object {
-        fun Factory(cardId: Int): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun Factory(cardId: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
                 modelClass: Class<T>, extras: CreationExtras

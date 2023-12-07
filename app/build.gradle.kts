@@ -43,6 +43,8 @@ android {
 dependencies {
     val nav_version = "2.7.5"
     val room_version = "2.6.1"
+    val retrofit_version = "2.9.0"
+    val gson_version = "2.9.0"
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
@@ -51,6 +53,14 @@ dependencies {
 
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+
+    implementation("com.squareup.retrofit2:converter-gson:$gson_version")
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

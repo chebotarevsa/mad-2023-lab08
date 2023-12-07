@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab8.related_to_data.Card
 
 class CustomRecyclerAdapter(
     private val action: ActionInterface
@@ -47,14 +48,14 @@ class CustomRecyclerAdapter(
         holder.largeTextView.text = card.answer
         holder.smallTextView.text = card.translation
         holder.itemView.setOnClickListener {
-            action.onItemClick(card.id!!)
+            action.onItemClick(card.id)
         }
         holder.deleteImage.setOnClickListener {
             AlertDialog.Builder(holder.deleteImage.context)
                 .setIcon(android.R.drawable.ic_menu_delete)
                 .setTitle("Вы действительно хотите удалить карточку?").setMessage(
                     "Будет удалена карточка:" + "\n ${card.answer} / ${card.translation}"
-                ).setPositiveButton("Да") { _, _ -> action.onDeleteCard(card.id!!) }
+                ).setPositiveButton("Да") { _, _ -> action.onDeleteCard(card.id) }
                 .setNegativeButton("Нет") { _, _ ->
                     Toast.makeText(
                         holder.deleteImage.context, "Удаление отменено", Toast.LENGTH_LONG

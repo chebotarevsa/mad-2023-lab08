@@ -1,4 +1,4 @@
-package com.example.lab8
+package com.example.lab8.related_to_data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -13,6 +13,9 @@ interface CardDao {
     @Insert
     suspend fun insert(card: Card)
 
+    @Insert
+    suspend fun insert(cards: List<Card>)
+
     @Query("SELECT * FROM card")
     fun findAll(): LiveData<List<Card>>
 
@@ -20,7 +23,7 @@ interface CardDao {
     fun findByTranslation(translation: String): LiveData<Card>
 
     @Query("SELECT * FROM card WHERE id=:id LIMIT 1")
-    fun findById(id: Int): LiveData<Card>
+    fun findById(id: String): LiveData<Card>
 
     @Update
     suspend fun update(card: Card): Int
