@@ -9,11 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.lab8.databinding.FragmentListCardBinding
-import com.example.lab8.data.db.CardTable
 
 class ListCardFragment : Fragment() {
+
     private var _binding: FragmentListCardBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: CustomRecyclerAdapter
@@ -36,12 +35,13 @@ class ListCardFragment : Fragment() {
 
 
         binding.addbuttonid.setOnClickListener {
-            val navAction = ListCardFragmentDirections
-                .actionListCardFragmentToEditCardFragment("empty")
+            val navAction =
+                ListCardFragmentDirections.actionListCardFragmentToEditCardFragment("empty")
             findNavController().navigate(navAction)
         }
         return binding.root
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -49,8 +49,7 @@ class ListCardFragment : Fragment() {
 
     private val action = object : ActionInterface {
         override fun onItemClick(cardId: String) {
-            val action = ListCardFragmentDirections
-                .actionListCardFragmentToSeeCardFragment(cardId)
+            val action = ListCardFragmentDirections.actionListCardFragmentToSeeCardFragment(cardId)
             findNavController().navigate(action)
         }
 

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.lab8.databinding.FragmentSeeCardBinding
 
 class SeeCardFragment : Fragment() {
+
     private var _binding: FragmentSeeCardBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<SeeCardFragmentArgs>()

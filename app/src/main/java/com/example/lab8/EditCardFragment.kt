@@ -14,12 +14,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.lab8.databinding.FragmentEditCardBinding
 
 class EditCardFragment : Fragment() {
+
     private var _binding: FragmentEditCardBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<EditCardFragmentArgs>()
     private val cardId by lazy { args.cardId }
     private val viewModel: EditCardViewModel by viewModels { EditCardViewModel.Factory(cardId) }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,23 +39,13 @@ class EditCardFragment : Fragment() {
                         cardImage.setImageResource(R.drawable.wallpapericon)
                     }
                 }
+                observeFieldsErrors(viewModel, this)
+                addFieldsTextChangedListeners(viewModel, this)
                 image.observe(viewLifecycleOwner) {
                     cardImage.setImageBitmap(it)
                 }
                 cardImage.setOnClickListener {
                     getSystemContent.launch("image/*")
-                }
-                questionError.observe(viewLifecycleOwner) {
-                    questionField.error = it
-                }
-                exampleError.observe(viewLifecycleOwner) {
-                    exampleField.error = it
-                }
-                answerError.observe(viewLifecycleOwner) {
-                    answerField.error = it
-                }
-                translationError.observe(viewLifecycleOwner) {
-                    translationField.error = it
                 }
                 status.observe(viewLifecycleOwner) {
                     if (it.isProcessed) {
@@ -65,20 +55,38 @@ class EditCardFragment : Fragment() {
                         is Failed -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG)
                             .show()
 
-                        is Success -> if (!viewModel.checkIfNewCard()) {
+                        is Success -> if (!checkIfNewCard()) {
                             val navAction =
                                 EditCardFragmentDirections.actionEditCardFragmentToSeeCardFragment(
                                     cardId
                                 )
                             findNavController().navigate(navAction)
                         } else {
-                            val navAction = EditCardFragmentDirections
-                                .actionEditCardFragmentToListCardFragment()
+                            val navAction =
+                                EditCardFragmentDirections.actionEditCardFragmentToListCardFragment()
                             findNavController().navigate(navAction)
                         }
                     }
                     it.isProcessed = true
                 }
+                saveButton.setOnClickListener {
+                    saveCard(
+                        questionField.text.toString(),
+                        exampleField.text.toString(),
+                        answerField.text.toString(),
+                        translationField.text.toString(),
+                    )
+                }
+                return root
+            }
+        }
+    }
+
+    private fun addFieldsTextChangedListeners(
+        editCardViewModel: EditCardViewModel, fragmentEditCardBinding: FragmentEditCardBinding
+    ) {
+        with(editCardViewModel) {
+            with(fragmentEditCardBinding) {
                 questionField.addTextChangedListener(object : CustomEmptyTextWatcher() {
                     override fun afterTextChanged(s: Editable?) {
                         validateQuestion(s.toString())
@@ -99,15 +107,27 @@ class EditCardFragment : Fragment() {
                         validateTranslation(s.toString())
                     }
                 })
-                saveButton.setOnClickListener {
-                    viewModel.saveCard(
-                        questionField.text.toString(),
-                        exampleField.text.toString(),
-                        answerField.text.toString(),
-                        translationField.text.toString(),
-                    )
+            }
+        }
+    }
+
+    private fun observeFieldsErrors(
+        editCardViewModel: EditCardViewModel, fragmentEditCardBinding: FragmentEditCardBinding
+    ) {
+        with(editCardViewModel) {
+            with(fragmentEditCardBinding) {
+                questionError.observe(viewLifecycleOwner) {
+                    questionField.error = it
                 }
-                return root
+                exampleError.observe(viewLifecycleOwner) {
+                    exampleField.error = it
+                }
+                answerError.observe(viewLifecycleOwner) {
+                    answerField.error = it
+                }
+                translationError.observe(viewLifecycleOwner) {
+                    translationField.error = it
+                }
             }
         }
     }

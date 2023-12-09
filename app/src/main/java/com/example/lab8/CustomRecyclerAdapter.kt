@@ -14,7 +14,9 @@ import com.example.lab8.data.db.CardTable
 class CustomRecyclerAdapter(
     private val action: ActionInterface
 ) : RecyclerView.Adapter<CustomRecyclerAdapter.CardHolder>() {
+
     class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val thumbnailImage: ImageView = itemView.findViewById(R.id.thumbnail)
         val largeTextView: TextView = itemView.findViewById(R.id.textViewLarge)
         val smallTextView: TextView = itemView.findViewById(R.id.textViewSmall)
@@ -29,9 +31,7 @@ class CustomRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         val itemView =
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.recycler_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
         return CardHolder(itemView)
     }
 

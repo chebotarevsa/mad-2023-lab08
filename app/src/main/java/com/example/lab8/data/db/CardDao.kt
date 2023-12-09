@@ -6,7 +6,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.lab8.domain.entity.Card
 
 @Dao
 interface CardDao {

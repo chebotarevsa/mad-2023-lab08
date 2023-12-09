@@ -5,26 +5,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8.data.db.CardDatabase
 import com.example.lab8.data.db.CardTable
-import com.example.lab8.data.remote.CardController
-import com.example.lab8.data.remote.ImageController
-import com.example.lab8.data.repository.CardRepositoryImpl
 import com.example.lab8.domain.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
-class ListCardViewModel(
-    private val database: CardDatabase,
-    private val cardRepository: CardRepository
-) : ViewModel() {
-    var cards: LiveData<List<CardTable>> = database.cardDao().findAll()
+class ListCardViewModel(private val cardRepository: CardRepository) : ViewModel() {
+
+    var cards: LiveData<List<CardTable>> = cardRepository.findAll()
 
     fun deleteCard(cardId: String) {
         thread {
             val card = cards.value?.first { it.id == cardId }
-            card?.let { viewModelScope.launch { database.cardDao().delete(it) } }
+            card?.let {
+                viewModelScope.launch {
+                    cardRepository.delete(it)
+                }
+            }
         }
     }
 
@@ -37,6 +35,7 @@ class ListCardViewModel(
     }
 
     companion object {
+
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
@@ -45,12 +44,7 @@ class ListCardViewModel(
                 val application =
                     checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
                 return ListCardViewModel(
-                    CardDatabase.getInstance(application),
-                    CardRepositoryImpl(
-                        CardDatabase.getInstance(application),
-                        CardController.getInstance(),
-                        ImageController.getInstance()
-                    )
+                    CardRepository.getInstance(application)
                 ) as T
             }
         }

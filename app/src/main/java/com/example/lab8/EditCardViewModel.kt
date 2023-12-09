@@ -10,18 +10,18 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.lab8.data.db.CardTable
-import com.example.lab8.data.db.CardDatabase
+import com.example.lab8.domain.repository.CardRepository
 import kotlinx.coroutines.launch
 
+class EditCardViewModel(private val cardRepository: CardRepository, val cardId: String) :
+    ViewModel() {
 
-class EditCardViewModel(private val database: CardDatabase, val cardId: String) : ViewModel() {
-    private val _dbCard = database.cardDao().findById(cardId)
+    private val _repoCard = cardRepository.findById(cardId)
 
     private var _currentCardTable: CardTable? = null
 
     private val _cardTable = MediatorLiveData<CardTable>()
     val cardTable: LiveData<CardTable> = _cardTable
-
 
     private var _questionError = MutableLiveData<String>()
     val questionError: LiveData<String> = _questionError
@@ -31,15 +31,14 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
     val answerError: LiveData<String> = _answerError
     private var _translationError = MutableLiveData<String>()
     val translationError: LiveData<String> = _translationError
+    private var _image = MutableLiveData<Bitmap?>()
+    val image: LiveData<Bitmap?> = _image
 
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
 
-    private var _image = MutableLiveData<Bitmap?>()
-    val image: LiveData<Bitmap?> = _image
-
     init {
-        _cardTable.addSource(_dbCard) {
+        _cardTable.addSource(_repoCard) {
             if (!checkIfNewCard()) _cardTable.value = it
             else _cardTable.value = getEmptyCard()
         }
@@ -102,9 +101,9 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
             newCard?.let {
                 viewModelScope.launch {
                     if (checkIfNewCard()) {
-                        database.cardDao().insert(it)
+                        cardRepository.insert(it)
                     } else {
-                        database.cardDao().update(it)
+                        cardRepository.update(it)
                     }
                     _status.value = Success()
                 }
@@ -112,7 +111,9 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
         }
     }
 
-    private fun getEmptyCard() = CardTable(question = "", example = "", translation = "", answer = "")
+    private fun getEmptyCard() =
+        CardTable(question = "", example = "", translation = "", answer = "")
+
     fun checkIfNewCard() = cardId == "empty"
 
     private fun checkAllIfNotBlank(
@@ -123,19 +124,21 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
     ) = question.isBlank() || example.isBlank() || answer.isBlank() || translation.isBlank()
 
     override fun onCleared() {
-        _cardTable.removeSource(_dbCard)
+        _cardTable.removeSource(_repoCard)
         super.onCleared()
     }
 
     companion object {
-        fun Factory(cardId: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>, extras: CreationExtras
-            ): T {
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                return EditCardViewModel(CardDatabase.getInstance(application), cardId) as T
+
+        fun Factory(cardId: String): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>, extras: CreationExtras
+                ): T {
+                    val application = checkNotNull(extras[APPLICATION_KEY])
+                    return EditCardViewModel(CardRepository.getInstance(application), cardId) as T
+                }
             }
-        }
     }
 }
