@@ -1,16 +1,11 @@
-package com.example.lab8.related_to_data
+package com.example.lab8.data.remote
 
-import android.graphics.Bitmap
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.example.lab8.domain.entity.Card
 import com.google.gson.annotations.SerializedName
-import java.util.UUID
 
-@Entity
-data class Card(
+data class CardModel(
     @SerializedName("Id")
-    @PrimaryKey
-    val id: String = UUID.randomUUID().toString(),
+    val id: String,
     @SerializedName("Question")
     val question: String,
     @SerializedName("Example")
@@ -19,6 +14,10 @@ data class Card(
     val answer: String,
     @SerializedName("Translate")
     val translation: String,
-//    @SerializedName("Id")
-    val image: Bitmap? = null
-)
+    @SerializedName("Image")
+    val image: String
+) {
+    fun toEntity(): Card {
+        return Card(id, question, example, answer, translation)
+    }
+}

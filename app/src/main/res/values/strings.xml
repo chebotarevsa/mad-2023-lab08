@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AnkiLab7</string>
+    <string name="app_name">Lab8</string>
 
     <string name="question_field">Question: %1$s</string>
     <string name="example_field">Hint: %1$s</string>

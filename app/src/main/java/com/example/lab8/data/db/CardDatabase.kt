@@ -1,4 +1,4 @@
-package com.example.lab8.related_to_data
+package com.example.lab8.data.db
 
 import android.content.Context
 import androidx.room.Database
@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.lab8.Converters
 
 
-@Database(entities = [Card::class], version = 3)
+@Database(entities = [CardTable::class], version = 7)
 @TypeConverters(Converters::class)
 abstract class CardDatabase : RoomDatabase() {
     abstract fun cardDao(): CardDao

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lab8.databinding.FragmentListCardBinding
+import com.example.lab8.data.db.CardTable
 
 class ListCardFragment : Fragment() {
     private var _binding: FragmentListCardBinding? = null
@@ -27,7 +29,7 @@ class ListCardFragment : Fragment() {
         adapter = CustomRecyclerAdapter(action).apply {
             viewModel.cards.observe(viewLifecycleOwner) {
                 viewModel.getCardsFromRemoteIfEmpty()
-                cards = it
+                cardTables = it
             }
         }
         recyclerView.adapter = adapter
@@ -40,7 +42,6 @@ class ListCardFragment : Fragment() {
         }
         return binding.root
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

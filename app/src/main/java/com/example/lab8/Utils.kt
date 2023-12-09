@@ -12,6 +12,8 @@ import android.text.TextWatcher
 import androidx.room.TypeConverter
 import java.io.ByteArrayOutputStream
 
+
+
 fun Uri?.bitmap(context: Context): Bitmap? {
     return this?.let {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

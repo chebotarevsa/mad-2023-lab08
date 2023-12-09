@@ -9,18 +9,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8.related_to_data.Card
-import com.example.lab8.related_to_data.CardDatabase
+import com.example.lab8.data.db.CardTable
+import com.example.lab8.data.db.CardDatabase
 import kotlinx.coroutines.launch
 
 
 class EditCardViewModel(private val database: CardDatabase, val cardId: String) : ViewModel() {
     private val _dbCard = database.cardDao().findById(cardId)
 
-    private var _currentCard: Card? = null
+    private var _currentCardTable: CardTable? = null
 
-    private val _card = MediatorLiveData<Card>()
-    val card: LiveData<Card> = _card
+    private val _cardTable = MediatorLiveData<CardTable>()
+    val cardTable: LiveData<CardTable> = _cardTable
 
 
     private var _questionError = MutableLiveData<String>()
@@ -39,9 +39,9 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
     val image: LiveData<Bitmap?> = _image
 
     init {
-        _card.addSource(_dbCard) {
-            if (!checkIfNewCard()) _card.value = it
-            else _card.value = getEmptyCard()
+        _cardTable.addSource(_dbCard) {
+            if (!checkIfNewCard()) _cardTable.value = it
+            else _cardTable.value = getEmptyCard()
         }
     }
 
@@ -50,38 +50,38 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
     }
 
     fun validateQuestion(question: String) {
-        if (question.isBlank() && (_currentCard?.question ?: "").isNotBlank()) {
+        if (question.isBlank() && (_currentCardTable?.question ?: "").isNotBlank()) {
             _questionError.value = "Error"
         }
-        if (question != card.value?.question) {
-            _currentCard = card.value?.copy(question = question)
+        if (question != cardTable.value?.question) {
+            _currentCardTable = cardTable.value?.copy(question = question)
         }
     }
 
     fun validateExample(example: String) {
-        if (example.isBlank() && (_currentCard?.example ?: "").isNotBlank()) {
+        if (example.isBlank() && (_currentCardTable?.example ?: "").isNotBlank()) {
             _exampleError.value = "Error"
         }
-        if (example != card.value?.example) {
-            _currentCard = card.value?.copy(example = example)
+        if (example != cardTable.value?.example) {
+            _currentCardTable = cardTable.value?.copy(example = example)
         }
     }
 
     fun validateAnswer(answer: String) {
-        if (answer.isBlank() && (_currentCard?.answer ?: "").isNotBlank()) {
+        if (answer.isBlank() && (_currentCardTable?.answer ?: "").isNotBlank()) {
             _answerError.value = "Error"
         }
-        if (answer != card.value?.answer) {
-            _currentCard = card.value?.copy(answer = answer)
+        if (answer != cardTable.value?.answer) {
+            _currentCardTable = cardTable.value?.copy(answer = answer)
         }
     }
 
     fun validateTranslation(translation: String) {
-        if (translation.isBlank() && (_currentCard?.translation ?: "").isNotBlank()) {
+        if (translation.isBlank() && (_currentCardTable?.translation ?: "").isNotBlank()) {
             _translationError.value = "Error"
         }
-        if (translation != card.value?.translation) {
-            _currentCard = card.value?.copy(translation = translation)
+        if (translation != cardTable.value?.translation) {
+            _currentCardTable = cardTable.value?.copy(translation = translation)
         }
     }
 
@@ -92,7 +92,7 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
         if (checkAllIfNotBlank(question, example, answer, translation)) {
             _status.value = Failed("One or several fields are blank")
         } else {
-            val newCard = card.value?.copy(
+            val newCard = cardTable.value?.copy(
                 question = question,
                 example = example,
                 answer = answer,
@@ -112,7 +112,7 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
         }
     }
 
-    private fun getEmptyCard() = Card(question = "", example = "", translation = "", answer = "")
+    private fun getEmptyCard() = CardTable(question = "", example = "", translation = "", answer = "")
     fun checkIfNewCard() = cardId == "empty"
 
     private fun checkAllIfNotBlank(
@@ -123,7 +123,7 @@ class EditCardViewModel(private val database: CardDatabase, val cardId: String) 
     ) = question.isBlank() || example.isBlank() || answer.isBlank() || translation.isBlank()
 
     override fun onCleared() {
-        _card.removeSource(_dbCard)
+        _cardTable.removeSource(_dbCard)
         super.onCleared()
     }
 

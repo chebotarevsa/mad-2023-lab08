@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8.related_to_data.Card
-import com.example.lab8.related_to_data.CardDatabase
+import com.example.lab8.data.db.CardTable
+import com.example.lab8.data.db.CardDatabase
 
 class SeeCardViewModel(database: CardDatabase, cardId: String) : ViewModel() {
-    val card: LiveData<Card> = database.cardDao().findById(cardId)
+    val cardTable: LiveData<CardTable> = database.cardDao().findById(cardId)
 
     companion object {
         fun Factory(cardId: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AnkiLab7</string>
+    <string name="app_name">AnkiLab8</string>
 
     <string name="question_field">Вопрос: %1$s</string>
     <string name="example_field">Подсказка: %1$s</string>

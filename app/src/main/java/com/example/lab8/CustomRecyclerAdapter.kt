@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab8.related_to_data.Card
+import com.example.lab8.data.db.CardTable
 
 class CustomRecyclerAdapter(
     private val action: ActionInterface
@@ -21,7 +21,7 @@ class CustomRecyclerAdapter(
         val deleteImage: ImageView = itemView.findViewById(R.id.deleter)
     }
 
-    var cards: List<Card> = emptyList()
+    var cardTables: List<CardTable> = emptyList()
         @SuppressLint("NotifyDataSetChanged") set(value) {
             field = value
             notifyDataSetChanged()
@@ -35,10 +35,10 @@ class CustomRecyclerAdapter(
         return CardHolder(itemView)
     }
 
-    override fun getItemCount() = cards.size
+    override fun getItemCount() = cardTables.size
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
-        val card = cards[position]
+        val card = cardTables[position]
         holder.itemView.tag = card.id
         if (card.image != null) {
             holder.thumbnailImage.setImageBitmap(card.image)
