@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditCardFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editing_card"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <ImageView
+        android:id="@+id/cardImage"
+        android:layout_width="@dimen/for_image"
+        android:layout_height="@dimen/for_image"
+        android:background="#FFEECC"
+        android:contentDescription="@string/current_image_or_placeholder"
+        android:src="@drawable/wallpapericon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <EditText
+        android:id="@+id/questionField"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_question"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
+        android:id="@+id/exampleField"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/enter_example"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/questionField" />
+
+    <EditText
+        android:id="@+id/answerField"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/enter_answer"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exampleField" />
+
+    <EditText
+        android:id="@+id/translationField"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/enter_translation"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerField" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24sp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:contentDescription="@string/save_button"
+        android:src="@drawable/saveicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:maxImageSize="32sp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
