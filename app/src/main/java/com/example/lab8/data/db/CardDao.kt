@@ -23,7 +23,7 @@ interface CardDao {
     fun findByTranslation(translation: String): LiveData<CardTable>
 
     @Query("SELECT * FROM cardtable WHERE id=:id LIMIT 1")
-    fun findById(id: String): LiveData<CardTable>
+    fun findById(id: String): LiveData<CardTable?>
 
     @Update
     suspend fun update(cardTable: CardTable): Int

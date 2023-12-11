@@ -27,7 +27,7 @@ class EditCardFragment : Fragment() {
         _binding = FragmentEditCardBinding.inflate(layoutInflater, container, false)
         with(viewModel) {
             with(binding) {
-                cardTable.observe(viewLifecycleOwner) { currentCard ->
+                card.observe(viewLifecycleOwner) { currentCard ->
                     questionField.setText(currentCard.question)
                     exampleField.setText(currentCard.example)
                     answerField.setText(currentCard.answer)

@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8.data.db.CardTable
+import com.example.lab8.domain.entity.Card
 import com.example.lab8.domain.repository.CardRepository
 
 class SeeCardViewModel(cardRepository: CardRepository, cardId: String) : ViewModel() {
 
-    val cardTable: LiveData<CardTable> = cardRepository.findById(cardId)
+    val card: LiveData<Card> = cardRepository.findById(cardId)
 
     companion object {
 

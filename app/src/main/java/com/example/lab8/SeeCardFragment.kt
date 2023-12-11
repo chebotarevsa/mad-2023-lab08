@@ -24,7 +24,7 @@ class SeeCardFragment : Fragment() {
     ): View {
         _binding = FragmentSeeCardBinding.inflate(layoutInflater, container, false)
         with(binding) {
-            viewModel.cardTable.observe(viewLifecycleOwner) {
+            viewModel.card.observe(viewLifecycleOwner) {
                 cardQuestion.text = getString(R.string.question_field, it.question)
                 cardExample.text = getString(R.string.example_field, it.example)
                 cardAnswer.text = getString(R.string.answer_field, it.answer)

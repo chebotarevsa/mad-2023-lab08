@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8.data.db.CardTable
+import com.example.lab8.domain.entity.Card
 import com.example.lab8.domain.repository.CardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
 
 class ListCardViewModel(private val cardRepository: CardRepository) : ViewModel() {
 
-    var cards: LiveData<List<CardTable>> = cardRepository.findAll()
+    var cards: LiveData<List<Card>> = cardRepository.findAll()
 
     fun deleteCard(cardId: String) {
         thread {
