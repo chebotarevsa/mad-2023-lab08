@@ -4,14 +4,13 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.provider.Settings.System.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.Card
 import com.example.myapplication.databinding.RecyclerItemBinding
 
 class CardAdapter(
@@ -25,7 +24,7 @@ class CardAdapter(
         val delete: ImageView = binding.deleteIcon
     }
 
-    var cardList: List<Card> = emptyList()
+    private var cardList: List<Card> = emptyList()
         @SuppressLint("NotifyDataSetChanged") set(value) {
             field = value
             notifyDataSetChanged()
@@ -53,7 +52,7 @@ class CardAdapter(
         holder.translateText.text = card.translation
 
         holder.itemView.setOnClickListener {
-            action.onItemClick(card.id!!)
+            action.onItemClick(card.id)
         }
 
         holder.delete.setOnClickListener {
@@ -71,7 +70,7 @@ class CardAdapter(
                 )
             )
             positiveButton.setOnClickListener {
-                action.onDeleteCard(card.id!!)
+                action.onDeleteCard(card.id)
                 alertDialog.dismiss()
             }
             negativeButton.setOnClickListener {
@@ -80,13 +79,8 @@ class CardAdapter(
         }
     }
 
-    fun setCards(cardList: List<Card>) {
-        this.cardList = cardList
+    fun setCards(cardTableList: List<Card>) {
+        this.cardList = cardTableList
         notifyDataSetChanged()
     }
-}
-
-interface ActionInterface {
-    fun onItemClick(cardId: Int)
-    fun onDeleteCard(cardId: Int)
 }

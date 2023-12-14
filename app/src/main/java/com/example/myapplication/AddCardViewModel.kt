@@ -9,25 +9,34 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.room.Database
+import com.example.myapplication.data.Card
+import com.example.myapplication.data.repo.CardRepository
 import kotlinx.coroutines.launch
 
-class AddCardViewModel(private val database: CardDB) : ViewModel() {
+class AddCardViewModel(private val cardRepository: CardRepository) : ViewModel() {
     private var _image = MutableLiveData<Bitmap?>()
     val image: LiveData<Bitmap?> = _image
-    private val _card = MediatorLiveData<Card>()
-    val card: LiveData<Card> = _card
+    private val _cardTable = MediatorLiveData<Card>()
+    val cardTable: LiveData<Card> = _cardTable
 
     init {
-        _card.value = Card(null, "", "", "", "", image.value)
+        _cardTable.value =
+            Card(question = "", example = "", answer = "", translation = "", image = null)
     }
 
     fun addCard(
         question: String, example: String, answer: String, translation: String
     ) {
         viewModelScope.launch {
-            database.cardDAO()
-                .insert(Card(null, question, example, answer, translation, image.value))
+            cardRepository.insert(
+                Card(
+                    question = question,
+                    example = example,
+                    answer = answer,
+                    translation = translation,
+                    image = image.value
+                )
+            )
         }
     }
 
@@ -42,7 +51,7 @@ class AddCardViewModel(private val database: CardDB) : ViewModel() {
                 modelClass: Class<T>, extras: CreationExtras
             ): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
-                return AddCardViewModel(CardDB.getInstance(application)) as T
+                return AddCardViewModel(CardRepository.getInstance(application)) as T
             }
         }
     }

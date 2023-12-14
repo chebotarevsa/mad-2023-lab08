@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,9 +28,9 @@ class AddCardFragment : Fragment() {
                 val answer = binding.answerAddText.text.toString()
                 val translation = binding.translationAddText.text.toString()
                 viewModel.addCard(question, example, answer, translation)
-                if (viewModel.card.value!!.image != null) {
-                    binding.cardImage.setImageBitmap(viewModel.card.value!!.image)
-                    viewModel.setImageToCard(viewModel.card.value!!.image)
+                if (viewModel.cardTable.value!!.image != null) {
+                    binding.cardImage.setImageBitmap(viewModel.cardTable.value!!.image)
+                    viewModel.setImageToCard(viewModel.cardTable.value!!.image)
                 } else {
                     binding.cardImage.setImageResource(R.drawable.panorama_outline)
                 }

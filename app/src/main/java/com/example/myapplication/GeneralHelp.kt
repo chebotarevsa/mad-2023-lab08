@@ -22,16 +22,6 @@ fun Uri?.bitmap(context: Context): Bitmap? {
     }
 }
 
-sealed class Status(var isProcessed: Boolean = false)
-class Success : Status()
-class Failed(val message: String) : Status()
-
-open class CustomEmptyTextWatcher : TextWatcher {
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-    override fun afterTextChanged(s: Editable?) = Unit
-}
-
 class Converters {
     @TypeConverter
     fun fromBitmapToByteArray(value: Bitmap?): ByteArray? {
@@ -44,6 +34,11 @@ class Converters {
     fun fromByteArrayToBitmap(value: ByteArray?): Bitmap? {
         return value?.let { BitmapFactory.decodeByteArray(value, 0, it.size) }
     }
+}
+
+interface ActionInterface {
+    fun onItemClick(cardId: String)
+    fun onDeleteCard(cardId: String)
 }
 
 

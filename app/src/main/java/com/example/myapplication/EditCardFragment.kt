@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +26,7 @@ class EditCardFragment : Fragment() {
 
         with(viewModel) {
             with(binding) {
-                card.observe(viewLifecycleOwner) {
+                cardTable.observe(viewLifecycleOwner) {
                     questionEditText.setText(it.question)
                     hintEditText.setText(it.example)
                     answerEditText.setText(it.answer)
@@ -44,7 +43,7 @@ class EditCardFragment : Fragment() {
 
         binding.fab.setOnClickListener {
             viewModel.editCard(
-                viewModel.card.value!!.id!!,
+                viewModel.cardTable.value!!.id,
                 binding.questionEditText.text.toString(),
                 binding.hintEditText.text.toString(),
                 binding.answerEditText.text.toString(),

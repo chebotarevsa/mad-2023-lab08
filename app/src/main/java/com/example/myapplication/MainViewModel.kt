@@ -7,27 +7,38 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.myapplication.data.Card
+import com.example.myapplication.data.repo.CardRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
-class MainViewModel(private val database: CardDB) : ViewModel() {
-    var cards: LiveData<List<Card>> = database.cardDAO().findAllCard()
-    private var _card = MutableLiveData<Card>()
-    val card: LiveData<Card> = _card
+class MainViewModel(private val cardRepository: CardRepository) : ViewModel() {
+    var cards: LiveData<List<Card>> = cardRepository.findAllCard()
+    private var _cardTable = MutableLiveData<Card>()
+    val card: LiveData<Card> = _cardTable
 
-    fun deleteCardById(cardId: Int) {
+    fun deleteCardById(cardId: String) {
         thread {
             val card = cards.value?.first { it.id == cardId }
-            card?.let { viewModelScope.launch { database.cardDAO().delete(it) } }
+            card?.let { viewModelScope.launch { cardRepository.delete(it) } }
         }
     }
 
-    fun setCardToDelete(cardId: Int) {
-        _card.value = database.cardDAO().findById(cardId).value
+    fun setCardToDelete(cardId: String) {
+        _cardTable.value = cardRepository.findById(cardId).value
     }
 
     fun setCardList() {
-        cards = database.cardDAO().findAllCard()
+        cards = cardRepository.findAllCard()
+    }
+
+    fun getFromRemote() {
+        if (cards.value!!.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                cardRepository.loadCards()
+            }
+        }
     }
 
     companion object {
@@ -37,7 +48,7 @@ class MainViewModel(private val database: CardDB) : ViewModel() {
                 modelClass: Class<T>, extras: CreationExtras
             ): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
-                return MainViewModel(CardDB.getInstance(application)) as T
+                return MainViewModel(CardRepository.getInstance(application)) as T
             }
         }
     }

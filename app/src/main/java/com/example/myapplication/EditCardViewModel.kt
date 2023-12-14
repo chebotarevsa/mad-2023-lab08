@@ -9,26 +9,27 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.myapplication.data.Card
+import com.example.myapplication.data.repo.CardRepository
 import kotlinx.coroutines.launch
 
-class EditCardViewModel(private val database: CardDB, val cardId: Int) : ViewModel() {
-    private var _card = MediatorLiveData<Card>()
-    val card: LiveData<Card> = _card
+class EditCardViewModel(private val cardRepository: CardRepository, cardId: String) : ViewModel() {
+    private var _cardTable = MediatorLiveData<Card>()
+    val cardTable: LiveData<Card> = _cardTable
     private var _image = MutableLiveData<Bitmap?>()
     val image: LiveData<Bitmap?> = _image
 
     init {
-        _card.addSource(database.cardDAO().findById(cardId)) {
-            _card.value = it
+        _cardTable.addSource(cardRepository.findById(cardId)) {
+            _cardTable.value = it
         }
     }
 
     fun editCard(
-        cardId: Int, question: String, example: String, answer: String, translation: String
+        cardId: String, question: String, example: String, answer: String, translation: String
     ) {
         viewModelScope.launch {
-            database.cardDAO()
-                .update(Card(cardId, question, example, answer, translation, image.value))
+            cardRepository.update(Card(cardId, question, example, answer, translation, image.value))
         }
     }
 
@@ -37,14 +38,15 @@ class EditCardViewModel(private val database: CardDB, val cardId: Int) : ViewMod
     }
 
     companion object {
-        fun Factory(cardId: Int): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>, extras: CreationExtras
-            ): T {
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                return EditCardViewModel(CardDB.getInstance(application), cardId) as T
+        fun Factory(cardId: String): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>, extras: CreationExtras
+                ): T {
+                    val application = checkNotNull(extras[APPLICATION_KEY])
+                    return EditCardViewModel(CardRepository.getInstance(application), cardId) as T
+                }
             }
-        }
     }
 }

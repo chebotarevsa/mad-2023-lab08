@@ -1,12 +1,13 @@
-package com.example.myapplication
+package com.example.myapplication.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.myapplication.Converters
 
-@Database(entities = [Card::class], version = 2)
+@Database(entities = [CardTable::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class CardDB : RoomDatabase() {
     abstract fun cardDAO(): CardDAO

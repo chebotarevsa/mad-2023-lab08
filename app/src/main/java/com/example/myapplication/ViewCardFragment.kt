@@ -22,8 +22,6 @@ class ViewCardFragment : Fragment() {
     ): View {
         super.onCreate(savedInstanceState)
         _binding = FragmentViewCardBinding.inflate(layoutInflater, container, false)
-
-
         with(viewModel) {
             card.observe(viewLifecycleOwner) {
                 binding.questionTextCard.text = getString(R.string.questionT, it.question)
@@ -42,8 +40,7 @@ class ViewCardFragment : Fragment() {
             val action = ViewCardFragmentDirections.actionViewCardFragmentToEditCardFragment(cardId)
             findNavController().navigate(action)
         }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val action = ViewCardFragmentDirections.actionViewCardFragmentToMainFragment()

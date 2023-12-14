@@ -35,7 +35,7 @@
             app:destination="@id/viewCardFragment" />
         <argument
             android:name="cardId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/viewCardFragment"
@@ -47,7 +47,7 @@
             app:destination="@id/editCardFragment" />
         <argument
             android:name="cardId"
-            app:argType="integer" />
+            app:argType="string" />
         <action
             android:id="@+id/action_viewCardFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
