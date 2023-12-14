@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/thumbnail_size"
+        android:layout_height="@dimen/thumbnail_size"
+        android:scaleType="centerCrop"
+        android:src="@drawable/panorama_outline"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/text_padding_start"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize2"
+            android:text="@string/answer" />
+
+        <TextView
+            android:id="@+id/translate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSize"
+            android:text="@string/translate" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_width="@dimen/delete_icon_size"
+        android:layout_height="@dimen/delete_icon_size"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/delete" />
+
+</LinearLayout>
