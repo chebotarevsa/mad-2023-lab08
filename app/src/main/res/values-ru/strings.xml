@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Мой проект</string>
+    <string name="answer">Ответ</string>
+    <string name="translate">Перевод</string>
+    <string name="f">Добавить</string>
+    <string name="answerT">Ответ: %1$s</string>
+    <string name="translateT">Перевод: %1$s</string>
+    <string name="e">Изменить</string>
+    <string name="questionT">Вопрос: %1$s</string>
+    <string name="hintT">Подсказка: %1$s</string>
+    <string name="s">Сохранить</string>
+    <string name="questionAdd">Добавить вопрос</string>
+    <string name="hintAdd">Добавить подсказку</string>
+    <string name="answerAdd">Добавить ответ</string>
+    <string name="translateAdd">Добавить перевод</string>
+    <string name="delete_card_title">Удалить карточку</string>
+    <string name="delete_card_message">Вы уверены что хотите удалить эту карточку?</string>
+    <string name="yes">Да</string>
+    <string name="cancel">Отмена</string>
+    <string name="error_message">Не все поля заполнены</string>
+</resources>

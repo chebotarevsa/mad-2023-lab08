@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textWrite">200dp</dimen>
+    <dimen name="card_img">200dp</dimen>
+    <dimen name="card_view_image_margin_top">16dp</dimen>
+    <dimen name="card_view_text_margin">8dp</dimen>
+    <dimen name="fab_margin_end">16dp</dimen>
+    <dimen name="fab_margin_bottom">16dp</dimen>
+    <dimen name="text_padding_start">16dp</dimen>
+    <dimen name="thumbnail_size">50dp</dimen>
+    <dimen name="delete_icon_size">24dp</dimen>
+    <dimen name="minH">50dp</dimen>
+    <dimen name="textSize">16sp</dimen>
+    <dimen name="maxImageSize">32dp</dimen>
+    <dimen name="textSize2">18sp</dimen>
+    <dimen name="bottom_margin">16dp</dimen>
+    <dimen name="paddingDP">50dp</dimen>
+</resources>
