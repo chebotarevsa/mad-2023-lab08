@@ -50,6 +50,6 @@ open class CustomEmptyTextWatcher : TextWatcher {
 }
 
 interface ActionInterface {
-    fun onItemClick(cardId: Int)
-    fun onDeleteCard(cardId: Int)
+    fun onItemClick(cardId: String)
+    fun onDeleteCard(cardId: String)
 }

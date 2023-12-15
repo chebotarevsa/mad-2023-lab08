@@ -28,15 +28,16 @@ class CardListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = AdapterRecyclerView(action).apply {
             view_model.list_cards.observe(viewLifecycleOwner){
+                view_model.getCardsFromRemoteIfEmpty()
                 cards = it
             }
         }
         recyclerView.adapter = adapter
 
         binding.addButton.setOnClickListener {
-            val action =
-                CardListFragmentDirections.actionCardListFragmentToCardEditFragment(-1)
-            findNavController().navigate(action)
+            val navAction =
+                CardListFragmentDirections.actionCardListFragmentToCardEditFragment("empty") //Закончить работу с CardEditFragment
+            findNavController().navigate(navAction)
         }
         return binding.root
 
@@ -47,12 +48,12 @@ class CardListFragment : Fragment() {
     }
 
     private val action = object : ActionInterface {
-        override fun onItemClick(cardId: Int) {
+            override fun onItemClick(cardId: String) {
             val action = CardListFragmentDirections.actionCardListFragmentToCardSeeFragment(cardId)
             findNavController().navigate(action)
         }
 
-        override fun onDeleteCard(cardId: Int) {
+            override fun onDeleteCard(cardId: String) {
             view_model.deleteCard(cardId)
         }
     }

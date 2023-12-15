@@ -1,12 +1,10 @@
 package com.example.lab5
 
 import android.graphics.Bitmap
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import java.util.UUID
 
-@Entity
 data class Card(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
+    val id: String = UUID.randomUUID().toString(),
     val question: String,
     val example: String,
     val answer: String,

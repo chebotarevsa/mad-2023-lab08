@@ -10,17 +10,25 @@ import androidx.room.Update
 @Dao
 interface Dao {
     @Insert
-    suspend fun put(vararg cards: Card)
+    suspend fun put(cardTable: CardTable)
+
     @Insert
-    suspend fun put(card: Card)
+    suspend fun put(cardTables: List<CardTable>)
     @Update
     suspend fun update(card: Card): Int
     @Delete
     suspend fun delete(card: Card): Int
-    @Query("SELECT * FROM card")
-    fun getAll(): LiveData<List<Card>>
-    @Query("SELECT * FROM card WHERE translation=:translation LIMIT 1")
-    fun getTranslation(translation: String): LiveData<Card>
-    @Query("SELECT * FROM card WHERE id=:id LIMIT 1")
-    fun getId(id: Int): LiveData<Card>
+    @Query("SELECT * FROM cardtable")
+    fun getAll(): LiveData<List<CardTable>>
+    @Query("SELECT * FROM cardtable WHERE translation=:translation LIMIT 1")
+    fun findByTranslation(translation: String): LiveData<CardTable>
+
+    @Query("SELECT * FROM cardtable WHERE id=:id LIMIT 1")
+    fun findById(id: String): LiveData<CardTable?>
+
+    @Update
+    suspend fun update(cardTable: CardTable): Int
+
+    @Delete
+    suspend fun delete(cardTable: CardTable): Int
 }

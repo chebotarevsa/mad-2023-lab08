@@ -7,24 +7,23 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 
-@Database(entities = [Card::class], version = 2)
+@Database(entities = [CardTable::class], version = 7)
 @TypeConverters(Converters::class)
 abstract class DataBase : RoomDatabase() {
     abstract fun funDao(): Dao
 
     companion object {
-        private var myDataBase: DataBase? = null
-        fun getInstance(context: Context): DataBase {
-            synchronized(this) {
-                var databaseInstance = myDataBase
-                if (databaseInstance == null) {
-                    databaseInstance = Room.databaseBuilder(
-                        context, DataBase::class.java, "myDatabase"
-                    ).fallbackToDestructiveMigration().build()
-                    myDataBase = databaseInstance
-                }
-                return databaseInstance
+        @Volatile
+        private var instance: DataBase? = null
+
+        fun getInstance(context: Context): DataBase = instance ?: synchronized(this) {
+            instance ?: getBuiltDatabase(context).also {
+                instance = it
             }
         }
+
+        private fun getBuiltDatabase(context: Context): DataBase = Room.databaseBuilder(
+            context, DataBase::class.java, "cardDatabase"
+        ).fallbackToDestructiveMigration().build()
     }
 }

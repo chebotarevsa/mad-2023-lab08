@@ -7,13 +7,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
+import kotlinx.coroutines.Dispatchers
 
-class CardListViewModel(private val database: DataBase) : ViewModel() {
-    var list_cards: LiveData<List<Card>> = database.funDao().getAll()
-        fun deleteCard(cardId: Int) {
+    class CardListViewModel(private val cardRepository: CardRepository) : ViewModel() {
+            var list_cards: LiveData<List<Card>> = cardRepository.getAll()
+        fun deleteCard(cardId: String) {
         thread {
             val card = list_cards.value?.first { it.id == cardId }
-            card?.let { viewModelScope.launch { database.funDao().delete(it) } }
+            card?.let {
+                viewModelScope.launch {
+                    cardRepository.delete(it)
+                }
+            }
         }
     }
 
@@ -25,7 +30,14 @@ class CardListViewModel(private val database: DataBase) : ViewModel() {
             ): T {
                 val application =
                     checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-                return CardListViewModel(DataBase.getInstance(application)) as T
+                return CardListViewModel(CardRepository.getInstance(application)) as T
+            }
+        }
+    }
+            fun getCardsFromRemoteIfEmpty() {
+        if (list_cards.value!!.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                cardRepository.loadCards()
             }
         }
     }
