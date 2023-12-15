@@ -24,12 +24,12 @@ class CardSeeFragment : Fragment() {
     ): View? {
         _binding = FragmentCardSeeBinding.inflate(layoutInflater)
         with(binding) {
-            view_model.list_cards.observe(viewLifecycleOwner) {
+            view_model.card.observe(viewLifecycleOwner) {
                 textQuestion.text = getString(R.string.questionField, it.question)
                 textExample.text = getString(R.string.exampleField, it.example)
                 textAnswer.text = getString(R.string.answerField, it.answer)
                 textTranslation.text = getString(R.string.translationField, it.translation)
-                idNumber.text = it.id.toString()
+                idNumber.text = it.id
                 if (it.image != null) {
                     picture.setImageBitmap(it.image)
                 } else {
