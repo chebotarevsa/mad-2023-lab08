@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Лабораторная 6</string>
+    <string name="textAbove">Слово</string>
+    <string name="textBelow">Перевод</string>
+    <string name="addButton">добавитьКнопка</string>
+    <string name="seeingCard">Просмотр карточки</string>
+    <string name="currOrPlaceholder">Картинка или заглушка</string>
+    <string name="questionField">Вопрс: %1$s</string>
+    <string name="exampleField">Подсказка: %1$s</string>
+    <string name="answerField">Ответ: %1$s</string>
+    <string name="translationField">Перевод: %1$s</string>
+    <string name="editButton">редактироватьКнопка</string>
+    <string name="backButton">обратноКнопка</string>
+    <string name="addingCard">Добавление карточки</string>
+    <string name="enterTranslation">Введите перевод</string>
+    <string name="enterAnswer">Введите ответ</string>
+    <string name="enterExample">Введите пример</string>
+    <string name="enterQuestion">Введите вопрос</string>
+    <string name="editingCard">Редактирование карточки</string>
+    <string name="saveButton">кнопкаСохранения</string>
+</resources>
