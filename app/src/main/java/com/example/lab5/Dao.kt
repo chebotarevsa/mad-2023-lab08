@@ -14,10 +14,6 @@ interface Dao {
 
     @Insert
     suspend fun put(cardTables: List<CardTable>)
-    @Update
-    suspend fun update(card: Card): Int
-    @Delete
-    suspend fun delete(card: Card): Int
     @Query("SELECT * FROM cardtable")
     fun getAll(): LiveData<List<CardTable>>
     @Query("SELECT * FROM cardtable WHERE translation=:translation LIMIT 1")
