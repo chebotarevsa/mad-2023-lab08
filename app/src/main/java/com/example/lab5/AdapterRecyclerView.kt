@@ -1,4 +1,4 @@
-package com.example.lab5 //ПОМЕНЯТЬ УДАЛЕНИЕ КАТОЧКИ
+package com.example.lab5
 
 import android.view.LayoutInflater
 import android.view.View
@@ -39,14 +39,14 @@ class AdapterRecyclerView(private val action: ActionInterface) :
         holder.largeTextView.text = card.answer
         holder.smallTextView.text = card.translation
         holder.itemView.setOnClickListener {
-            action.onItemClick(card.id!!)
+            action.onItemClick(card.id)
         }
         holder.deleteImage.setOnClickListener {
             AlertDialog.Builder(holder.deleteImage.context)
                 .setIcon(android.R.drawable.ic_menu_delete)
                 .setTitle("Удаление").setMessage(
                     "Удалить карточку:" + "\n ${card.answer}"
-                ).setPositiveButton("Да") { _, _ -> action.onDeleteCard(card.id!!) }
+                ).setPositiveButton("Да") { _, _ -> action.onDeleteCard(card.id) }
                 .setNegativeButton("Нет") { _, _ ->
                     Toast.makeText(
                         holder.deleteImage.context, "Отмена удаления", Toast.LENGTH_LONG

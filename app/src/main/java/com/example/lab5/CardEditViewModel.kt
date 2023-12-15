@@ -11,8 +11,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.launch
 
-class CardEditViewModel(private val database: DataBase, val cardId: Int) : ViewModel() {
-    private val databaseCard = database.funDao().getId(cardId)
+class CardEditViewModel(private val cardRepository: CardRepository, val cardId: String) :
+    ViewModel() {
+    private val _repoCard = cardRepository.getId(cardId)
     private var _currentCard: Card? = null
     private val Mcard = MediatorLiveData<Card>()
     val сard: LiveData<Card> = Mcard
@@ -73,7 +74,7 @@ class CardEditViewModel(private val database: DataBase, val cardId: Int) : ViewM
     }
 
     init {
-        Mcard.addSource(databaseCard) {
+        Mcard.addSource(_repoCard) {
             if (!checkIfNewCard()) Mcard.value = it
             else Mcard.value = getEmptyCard()
         }
@@ -97,9 +98,9 @@ class CardEditViewModel(private val database: DataBase, val cardId: Int) : ViewM
             newCard?.let {
                 viewModelScope.launch {
                     if (checkIfNewCard()) {
-                        database.funDao().put(it)
+                        cardRepository.put(it)
                     } else {
-                        database.funDao().update(it)
+                        cardRepository.update(it)
                     }
                     Mstatus.value = Success()
                 }
@@ -107,8 +108,10 @@ class CardEditViewModel(private val database: DataBase, val cardId: Int) : ViewM
         }
     }
 
-    private fun getEmptyCard() = Card(null, "", "", "", "")
-    fun checkIfNewCard() = cardId == -1
+    private fun getEmptyCard() =
+        Card(question = "", example = "", translation = "", answer = "")
+
+    fun checkIfNewCard() = cardId == "empty"
 
     private fun checkAllIfNotBlank(
         question: String,
@@ -118,21 +121,21 @@ class CardEditViewModel(private val database: DataBase, val cardId: Int) : ViewM
     ) = question.isBlank() || example.isBlank() || answer.isBlank() || translation.isBlank()
 
     override fun onCleared() {
-        Mcard.removeSource(databaseCard)
+        Mcard.removeSource(_repoCard)
         super.onCleared()
     }
 
     companion object {
-        fun Factory(cardId: Int): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>, extras: CreationExtras
-            ): T {
-                val application =
-                    checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-                return CardEditViewModel(DataBase.getInstance(application), cardId) as T
+        fun Factory(cardId: String): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>, extras: CreationExtras
+                ): T {
+                    val application = checkNotNull(extras[APPLICATION_KEY])
+                    return CardEditViewModel(CardRepository.getInstance(application), cardId) as T
+                }
             }
-        }
     }
 
 }
