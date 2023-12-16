@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Lab6</string>
+    <string name="textAbove">Word</string>
+    <string name="textBelow">Translation</string>
+    <string name="addButton">addButton</string>
+    <string name="seeingCard">Viewing Card</string>
+    <string name="currOrPlaceholder">Current picture or placeholder</string>
+    <string name="questionField">Question: %1$s</string>
+    <string name="exampleField">Hint: %1$s</string>
+    <string name="answerField">Answer: %1$s</string>
+    <string name="translationField">Translation: %1$s</string>
+    <string name="editButton">editButton</string>
+    <string name="backButton">backButton</string>
+    <string name="addingCard">Adding Card</string>
+    <string name="enterTranslation">Enter Translation</string>
+    <string name="enterAnswer">Enter Answer</string>
+    <string name="enterExample">Enter Example</string>
+    <string name="enterQuestion">Enter Question</string>
+    <string name="editingCard">Editing Card</string>
+    <string name="saveButton">saveButton</string>
+</resources>
