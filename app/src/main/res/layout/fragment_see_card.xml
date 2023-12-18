@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SeeCardFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seeing_card"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/idNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0" />
+
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="@dimen/for_image"
+        android:layout_height="@dimen/for_image"
+        android:contentDescription="@string/current_image_or_placeholder"
+        android:src="@drawable/wallpapericon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/cardQuestion"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:hint="@string/question_field"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/cardExample"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/example_field"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardQuestion" />
+
+    <TextView
+        android:id="@+id/cardAnswer"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/answer_field"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardExample" />
+
+    <TextView
+        android:id="@+id/cardTranslation"
+        android:layout_width="@dimen/st_phone_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/my_text_size"
+        android:hint="@string/translationField"
+        android:textSize="@dimen/my_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardAnswer" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24sp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:contentDescription="@string/edit_button"
+        android:src="@drawable/editicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:maxImageSize="32sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24sp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:contentDescription="@string/back_button"
+        android:src="@drawable/backicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:maxImageSize="32sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
