@@ -21,9 +21,15 @@ class MainViewModel(private val repository: CardsRepository) : ViewModel() {
         }
     }
 
+
+     var isGetCardsExecuted = false
+
     fun getCardsFromRemoteIfEmpty() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.loadCards()
+            if (!isGetCardsExecuted) {
+                repository.loadCards()
+                isGetCardsExecuted = true
+            }
         }
     }
 

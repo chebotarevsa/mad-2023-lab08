@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,8 +33,13 @@ class MainFragment : Fragment() {
             adapter.setItem(cards)
         }
 
-        binding.addCardFromNet.setOnClickListener{
-            viewModel.getCardsFromRemoteIfEmpty()
+        binding.addCardFromNet.setOnClickListener {
+            if (!viewModel.isGetCardsExecuted) {
+                viewModel.getCardsFromRemoteIfEmpty()
+                showToast("Загрузка карточек запущена. Пожалуйста, подождите.")
+            } else {
+                showToast("Карточки уже были загружены!")
+            }
         }
 
         val button = binding.button
@@ -43,6 +49,10 @@ class MainFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     private val adapterCallBack = object : CallbackFun {
@@ -55,5 +65,4 @@ class MainFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
 }
