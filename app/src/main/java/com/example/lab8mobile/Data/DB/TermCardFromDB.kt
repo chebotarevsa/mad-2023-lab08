@@ -3,7 +3,7 @@ package com.example.lab8mobile.Data.DB
 import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Entity.TermCard
 
 @Entity(tableName = "term_cards")
 data class TermCardFromDB(

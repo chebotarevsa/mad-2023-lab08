@@ -5,20 +5,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8mobile.Data.DB.CardsRepositoryDB
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Repositoty.CardsRepository
+import com.example.lab8mobile.Domain.Entity.TermCard
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repositoryDB: CardsRepositoryDB) : ViewModel() {
+class MainViewModel(private val repository: CardsRepository) : ViewModel() {
 
-    var cardsList: LiveData<List<TermCard>> = repositoryDB.findAll()
+    var cardsList: LiveData<List<TermCard>> = repository.findAll()
 
 
     fun deleteCard(card: TermCard) {
         viewModelScope.launch {
-            repositoryDB.delete(card)
+            repository.delete(card)
         }
     }
+
+    fun getCardsFromRemoteIfEmpty() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.loadCards()
+        }
+    }
+
 
     companion object {
         fun Factory(): ViewModelProvider.Factory =
@@ -27,8 +35,9 @@ class MainViewModel(private val repositoryDB: CardsRepositoryDB) : ViewModel() {
                 override fun <T : ViewModel> create(
                     modelClass: Class<T>, extras: CreationExtras
                 ): T {
-                    val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
-                    return MainViewModel(CardsRepositoryDB.getInstance(application)) as T
+                    val application =
+                        checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])
+                    return MainViewModel(CardsRepository.getInstance(application)) as T
                 }
             }
     }

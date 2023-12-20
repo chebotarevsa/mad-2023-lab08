@@ -1,4 +1,4 @@
-package com.example.lab8mobile.Data
+package com.example.lab8mobile.Domain.Entity
 
 import android.graphics.Bitmap
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.lab8mobile.databinding.ItemCardBinding
 import com.example.lab8mobile.CallbackFun
+import com.example.lab8mobile.Domain.Entity.TermCard
 import com.example.lab8mobile.R
 
 

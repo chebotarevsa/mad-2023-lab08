@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.lab8mobile.Data.DB.CardsRepositoryDB
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Repositoty.CardsRepository
+import com.example.lab8mobile.Domain.Entity.TermCard
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-class AddCardViewModel(private val repositoryDB: CardsRepositoryDB, val cardId: String) :
+class AddCardViewModel(private val repositoryDB: CardsRepository, val cardId: String) :
     ViewModel() {
 
     private val _imageBitmap = MutableLiveData<Bitmap?>()
@@ -84,7 +84,7 @@ class AddCardViewModel(private val repositoryDB: CardsRepositoryDB, val cardId: 
                     modelClass: Class<T>, extras: CreationExtras
                 ): T {
                     val application = checkNotNull(extras[APPLICATION_KEY])
-                    return AddCardViewModel(CardsRepositoryDB.getInstance(application), cardId) as T
+                    return AddCardViewModel(CardsRepository.getInstance(application), cardId) as T
                 }
             }
     }

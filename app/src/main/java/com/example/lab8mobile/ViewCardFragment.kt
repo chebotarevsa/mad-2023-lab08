@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Entity.TermCard
 import com.example.lab8mobile.databinding.FragmentViewCardBinding
 
 class ViewCardFragment : Fragment() {

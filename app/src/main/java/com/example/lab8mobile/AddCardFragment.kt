@@ -40,7 +40,6 @@ class AddCardFragment : Fragment() {
             } else {
                 setupDefaultImage()
             }
-//            }
         }
         viewModel.imageBitmap.observe(viewLifecycleOwner) {
             binding.imageView.setImageBitmap(it)
@@ -101,6 +100,6 @@ class AddCardFragment : Fragment() {
         val imageHeight = getResources().getDimension(R.dimen.HeightimageViewAddCard).toInt()
         val yourBitmap =
             getDrawable(requireContext(), R.drawable.download_img)!!.toBitmap(imageWidth, imageHeight)
-        viewModel.setImageBitmap(yourBitmap)
+        binding.imageView.setImageBitmap(yourBitmap)
     }
 }

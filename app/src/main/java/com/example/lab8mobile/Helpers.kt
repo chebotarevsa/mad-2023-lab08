@@ -3,7 +3,7 @@ package com.example.lab8mobile
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Entity.TermCard
 import java.io.ByteArrayOutputStream
 
 const val NEW_CARD = "-1"

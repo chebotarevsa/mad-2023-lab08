@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab8mobile.databinding.FragmentMainBinding
 import com.example.lab8mobile.Data.CardsAdapter
-import com.example.lab8mobile.Data.TermCard
+import com.example.lab8mobile.Domain.Entity.TermCard
 
 class MainFragment : Fragment() {
     private lateinit var adapter: CardsAdapter
@@ -30,6 +30,10 @@ class MainFragment : Fragment() {
 
         viewModel.cardsList.observe(viewLifecycleOwner) { cards ->
             adapter.setItem(cards)
+        }
+
+        binding.addCardFromNet.setOnClickListener{
+            viewModel.getCardsFromRemoteIfEmpty()
         }
 
         val button = binding.button
