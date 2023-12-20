@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">lab7Mobile</string>
+    <string name="enterQuestion">Enter a question</string>
+    <string name="enterHelp">Enter a hint</string>
+    <string name="enterAnswer">Enter answer</string>
+    <string name="enterTranslate">Enter translation</string>
+    <string name="Translate">Translate</string>
+    <string name="Answer">Answer</string>
+    <string name="Help">Hint</string>
+    <string name="Question">Question</string>
+
+</resources>

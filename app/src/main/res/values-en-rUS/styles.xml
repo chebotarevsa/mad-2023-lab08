@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RoundImageView">
+        <item name="android:background">@drawable/round_background</item>
+        <item name="android:padding">6dp</item>
+    </style>
+</resources>
