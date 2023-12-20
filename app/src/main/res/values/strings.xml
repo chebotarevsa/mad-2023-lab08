@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">lab7Mobile</string>
+    <string name="enterQuestion">Введите вопрос</string>
+    <string name="enterHelp">Введите подсказку</string>
+    <string name="enterAnswer">Введите ответ</string>
+    <string name="enterTranslate">Введите перевод</string>
+    <string name="Translate">Перевод</string>
+    <string name="Answer">Ответ</string>
+    <string name="Help">Подсказка</string>
+    <string name="Question">Вопрос</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
