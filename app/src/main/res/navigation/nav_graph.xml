@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listCardFragment">
+    <fragment
+        android:id="@+id/listCardFragment"
+        android:name="com.example.lab8.fragments.ArrayListFragment"
+        android:label="fragment_list_card"
+        tools:layout="@layout/fragment_array_list" >
+        <action
+            android:id="@+id/action_listCardFragment_to_seeCardFragment"
+            app:destination="@id/seeCardFragment" />
+        <action
+            android:id="@+id/action_listCardFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeCardFragment"
+        android:name="com.example.lab8.fragments.SeeFragment"
+        android:label="fragment_see_card"
+        tools:layout="@layout/fragment_see" >
+        <action
+            android:id="@+id/action_seeCardFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+        <action
+            android:id="@+id/action_seeCardFragment_to_listCardFragment"
+            app:destination="@id/listCardFragment" />
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="com.example.lab8.fragments.SaveEditFragment"
+        android:label="fragment_edit_card"
+        tools:layout="@layout/fragment_save_edit" >
+        <action
+            android:id="@+id/action_editCardFragment_to_seeCardFragment"
+            app:destination="@id/seeCardFragment" />
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editCardFragment_to_listCardFragment"
+            app:destination="@id/listCardFragment" />
+    </fragment>
+</navigation>
