@@ -29,6 +29,7 @@ class ArrayListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = CustomRecyclerAdapter(action).apply {
             viewModel.cards.observe(viewLifecycleOwner) {
+                viewModel.getCardsFromRemoteIfEmpty()
                 cards = it
             }
         }

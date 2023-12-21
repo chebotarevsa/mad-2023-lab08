@@ -7,12 +7,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.lab8.db.entity.Card
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 class ArrayListViewModel(private val cardRepository: CardRepository) : ViewModel() {
 
     val cards: LiveData<List<Card>> = cardRepository.findAll()
+
+    fun getCardsFromRemoteIfEmpty() {
+        if (cards.value!!.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                cardRepository.loadCards()
+            }
+        }
+    }
 
     fun deleteCard(cardId: String) {
         thread {
