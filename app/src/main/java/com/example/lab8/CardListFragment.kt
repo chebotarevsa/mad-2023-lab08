@@ -25,6 +25,7 @@ class CardListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = CustomRecyclerAdapter(action).apply {
             viewModel.cards.observe(viewLifecycleOwner) {
+                viewModel.getCardsFromServerIfEmpty()
                 cards = it
             }
         }
