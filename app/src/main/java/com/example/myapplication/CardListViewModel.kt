@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.myapplication.domain.entity.Card
 import com.example.myapplication.domain.repository.CardRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
@@ -21,6 +22,14 @@ class CardListViewModel(private val cardRepository: CardRepository) : ViewModel(
                 viewModelScope.launch {
                     cardRepository.delete(it)
                 }
+            }
+        }
+    }
+
+    fun getCardsFromRemoteIfEmpty() {
+        if (cards.value!!.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                cardRepository.loadCards()
             }
         }
     }

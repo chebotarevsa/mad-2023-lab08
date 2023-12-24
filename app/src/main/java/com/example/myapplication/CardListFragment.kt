@@ -29,6 +29,7 @@ class CardListFragment : Fragment() {
 
         adapter = RecyclerAdapter(action).apply {
             viewModel.cards.observe(viewLifecycleOwner) {
+                viewModel.getCardsFromRemoteIfEmpty()
                 cards = it
             }
         }

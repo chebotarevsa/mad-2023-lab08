@@ -1,17 +1,54 @@
 package com.example.myapplication.data.repository
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import com.example.myapplication.data.client.CardClient
+import com.example.myapplication.data.client.CardModel
+import com.example.myapplication.data.client.ImageClient
 import com.example.myapplication.data.db.CardDao
 import com.example.myapplication.data.db.CardDatabase
+import com.example.myapplication.data.db.CardTable
 import com.example.myapplication.data.db.toDb
 import com.example.myapplication.domain.entity.Card
 import com.example.myapplication.domain.repository.CardRepository
+import okhttp3.ResponseBody
+import retrofit2.http.GET
+import retrofit2.http.Streaming
+import retrofit2.http.Url
 
 class CardRepositoryImpl private constructor(
+    private val cardClient: CardClient,
+    private val imageClient: ImageClient,
     private val cardDao: CardDao
 ) : CardRepository {
+
+    override suspend fun loadCards() {
+        val cardsFromRemote = cardClient.getCards().map {
+            val imageBytes = imageClient.getImage(it.image).bytes()
+            val imageBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            CardTable(
+                id = it.id,
+                question = it.question,
+                example = it.example,
+                answer = it.answer,
+                translation = it.translation,
+                image = imageBitmap
+            )
+        }
+        cardDao.insert(cardsFromRemote)
+    }
+
+    @Streaming
+    @GET
+    override suspend fun getImage(@Url fileName: String): ResponseBody =
+        imageClient.getImage(fileName)
+
+    @GET("api.json")
+    override suspend fun getCards(): List<CardModel> =
+        cardClient.getCards()
+
 
     override suspend fun insert(card: Card) =
         cardDao.insert(card.toDb())
@@ -55,10 +92,14 @@ class CardRepositoryImpl private constructor(
 
         @Volatile
         private var instance: CardRepositoryImpl? = null
+        private const val baseUrl = "https://osa-s3.agroinvest.com/test/lab08/"
+
 
         fun getInstance(application: Application) =
             instance ?: synchronized(this) {
                 instance ?: CardRepositoryImpl(
+                    CardClient.getInstance(baseUrl),
+                    ImageClient.getInstance(baseUrl),
                     CardDatabase.getInstance(application).cardDao()
                 )
                     .also {
