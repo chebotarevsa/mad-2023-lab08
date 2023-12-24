@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardListFragment">
+
+    <fragment
+        android:id="@+id/cardListFragment"
+        android:name="com.example.myapplication.CardListFragment"
+        android:label="fragment_card_list"
+        tools:layout="@layout/fragment_card_list" >
+        <action
+            android:id="@+id/action_cardListFragment_to_viewCardFragment"
+            app:destination="@id/viewCardFragment" />
+        <action
+            android:id="@+id/action_cardListFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="com.example.myapplication.EditCardFragment"
+        android:label="fragment_edit_card"
+        tools:layout="@layout/fragment_edit_card" >
+        <action
+            android:id="@+id/action_editCardFragment_to_viewCardFragment"
+            app:destination="@id/viewCardFragment" />
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editCardFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+        <action
+            android:id="@+id/action_editCardFragment_to_viewCardFragment2"
+            app:destination="@id/viewCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewCardFragment"
+        android:name="com.example.myapplication.ViewCardFragment"
+        android:label="fragment_view_card"
+        tools:layout="@layout/fragment_view_card" >
+        <action
+            android:id="@+id/action_viewCardFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+        <action
+            android:id="@+id/action_viewCardFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+        <argument android:name="cardId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_viewCardFragment_to_editCardFragment2"
+            app:destination="@id/editCardFragment" />
+    </fragment>
+</navigation>

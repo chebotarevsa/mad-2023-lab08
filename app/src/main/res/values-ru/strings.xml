@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Лаба 8</string>
+    <string name="setQuestion">Введите вопрос</string>
+    <string name="setExample">Введите подсказку</string>
+    <string name="setAnswer">Введите ответ</string>
+    <string name="setTranslation">Введите перевод</string>
+    <string name="Question">Вопрос</string>
+    <string name="Example">Подсказка</string>
+    <string name="Answer">Ответ</string>
+    <string name="Translate">Перевод</string>
+    <string name="questionField">Вопрос: %1$s</string>
+    <string name="exampleField">Подсказка: %1$s</string>
+    <string name="answerField">Ответ: %1$s</string>
+    <string name="translationField">Перевод: %1$s</string>
+    <string name="misquestion">Поле вопроса отсутствует</string>
+    <string name="misexample">Поле примера отсутствует</string>
+    <string name="misanswer">Поле ответа отсутствует</string>
+    <string name="mistranslation">Поле перевода отсутствует</string>
+    <string name="delete_card_title">Вы действительно хотите удалить карточку?</string>
+    <string name="delete_card_message">Будет удалена карточка: %s / %s</string>
+    <string name="yes">Да</string>
+    <string name="deleted_successfully">Удалено успешно</string>
+    <string name="deletion_canceled">Удаление отменено</string>
+    <string name="no">Нет</string>
+</resources>

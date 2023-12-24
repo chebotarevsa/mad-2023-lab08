@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Lab 8</string>
+    <string name="setQuestion">Enter question</string>
+    <string name="setExample">Enter example</string>
+    <string name="setAnswer">Enter answer</string>
+    <string name="setTranslation">Enter translation</string>
+    <string name="Question">Question</string>
+    <string name="Example">Example</string>
+    <string name="Answer">Answer</string>
+    <string name="Translate">Translate</string>
+    <string name="questionField">Question: %1$s</string>
+    <string name="exampleField">Example: %1$s</string>
+    <string name="answerField">Answer: %1$s</string>
+    <string name="translationField">Translation: %1$s</string>
+    <string name="misquestion">The question field is missing</string>
+    <string name="misexample">The example field is missing</string>
+    <string name="misanswer">The answer field is missing</string>
+    <string name="mistranslation">The translation field is missing</string>
+    <string name="delete_card_title">Do you really want to delete the card?</string>
+    <string name="delete_card_message">Card will be deleted: %s / %s</string>
+    <string name="yes">Yes</string>
+    <string name="deleted_successfully">Deleted successfully</string>
+    <string name="deletion_canceled">Deletion canceled</string>
+    <string name="no">No</string>
+</resources>
