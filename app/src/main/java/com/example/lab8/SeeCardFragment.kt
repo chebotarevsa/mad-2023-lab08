@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lab8.databinding.FragmentSeeCardBinding
+import com.example.lab8.viewmodels.SeeCardViewModel
 
 
 class SeeCardFragment : Fragment() {

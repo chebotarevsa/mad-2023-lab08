@@ -1,4 +1,4 @@
-package com.example.lab8
+package com.example.lab8.adapters
 
 import android.app.AlertDialog
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab8.ActionInterface
+import com.example.lab8.R
 import com.example.lab8.domain.entity.Card
 
 

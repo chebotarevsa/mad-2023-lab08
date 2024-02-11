@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lab8.databinding.FragmentEditCardBinding
+import com.example.lab8.viewmodels.EditCardViewModel
 
 
 class EditCardFragment : Fragment() {

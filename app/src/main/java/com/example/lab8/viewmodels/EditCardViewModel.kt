@@ -1,4 +1,4 @@
-package com.example.lab8
+package com.example.lab8.viewmodels
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData

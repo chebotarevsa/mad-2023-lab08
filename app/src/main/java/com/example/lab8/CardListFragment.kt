@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab8.adapters.CustomRecyclerAdapter
 import com.example.lab8.databinding.FragmentCardListBinding
+import com.example.lab8.viewmodels.CardListViewModel
 
 
 class CardListFragment : Fragment() {
@@ -32,6 +34,10 @@ class CardListFragment : Fragment() {
         recyclerView.adapter = adapter
         binding.addbuttonid.setOnClickListener {
             val action = CardListFragmentDirections.actionCardListFragmentToEditCardFragment("-1")
+            findNavController().navigate(action)
+        }
+        binding.tagButton.setOnClickListener {
+            val action = CardListFragmentDirections.actionCardListFragmentToTagListFragment()
             findNavController().navigate(action)
         }
 
