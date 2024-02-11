@@ -12,4 +12,6 @@
     <string name="enter_translation_text">Enter translate</string>
     <string name="view_card_text">View card</string>
     <string name="placeholder_text">Text</string>
+    <string name="enter_tag_name_text">Enter tag name</string>
+    <string name="enter_color_code_text">Enter color code</string>
 </resources>

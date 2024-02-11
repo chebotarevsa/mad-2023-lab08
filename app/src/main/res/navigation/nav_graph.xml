@@ -58,5 +58,19 @@
         <action
             android:id="@+id/action_tagListFragment_to_cardListFragment"
             app:destination="@id/cardListFragment" />
+        <action
+            android:id="@+id/action_tagListFragment_to_editTagFragment"
+            app:destination="@id/editTagFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTagFragment"
+        android:name="com.example.lab8.EditTagFragment"
+        android:label="EditTagFragment" >
+        <action
+            android:id="@+id/action_editTagFragment_to_tagListFragment"
+            app:destination="@id/tagListFragment" />
+        <argument
+            android:name="tagId"
+            app:argType="string" />
     </fragment>
 </navigation>

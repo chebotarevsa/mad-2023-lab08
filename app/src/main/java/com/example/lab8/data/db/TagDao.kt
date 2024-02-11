@@ -19,4 +19,7 @@ interface TagDao {
 
     @Query("SELECT * FROM tag WHERE tagName = :tagName")
     fun findByTagName(tagName: String): Tag
+
+    @Query("SELECT * FROM tag WHERE id = :id")
+    fun findById(id: String): LiveData<Tag>
 }
