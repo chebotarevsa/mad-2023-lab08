@@ -27,7 +27,7 @@ class TagListFragment : Fragment() {
         _binding = FragmentTagListBinding.inflate(layoutInflater, container, false)
         val recyclerView: RecyclerView = binding.tagRecycler
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TagsAdapter().apply {
+        adapter = TagsAdapter(action).apply {
             viewModel.tags.observe(viewLifecycleOwner) {
                 tags = it
             }
@@ -38,11 +38,25 @@ class TagListFragment : Fragment() {
             val action = TagListFragmentDirections.actionTagListFragmentToEditTagFragment("-1")
             findNavController().navigate(action)
         }
+        binding.backButton.setOnClickListener {
+            val action = TagListFragmentDirections.actionTagListFragmentToCardListFragment()
+            findNavController().navigate(action)
+        }
         return binding.root
 
     }
 
+    private val action = object : ActionInterface {
+        override fun onItemClick(itemId: String) {
+            val action = TagListFragmentDirections
+                .actionTagListFragmentToSeeTagFragment(itemId)
+            findNavController().navigate(action)
+        }
 
+        override fun onDeleteItem(itemId: String) {
+            viewModel.deleteTag(itemId)
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

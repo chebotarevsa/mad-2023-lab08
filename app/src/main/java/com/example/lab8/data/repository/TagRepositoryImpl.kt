@@ -31,9 +31,9 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
         tagDao.findById(id)
 
 
-    override suspend fun update(tag: Tag): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(tag: Tag): Int =
+        tagDao.update(tag)
+
 
     companion object {
 

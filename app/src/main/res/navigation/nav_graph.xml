@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_tagListFragment_to_editTagFragment"
             app:destination="@id/editTagFragment" />
+        <action
+            android:id="@+id/action_tagListFragment_to_seeTagFragment"
+            app:destination="@id/seeTagFragment" />
     </fragment>
     <fragment
         android:id="@+id/editTagFragment"
@@ -72,5 +75,20 @@
         <argument
             android:name="tagId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeTagFragment"
+        android:name="com.example.lab8.SeeTagFragment"
+        android:label="fragment_see_tag"
+        tools:layout="@layout/fragment_see_tag" >
+        <action
+            android:id="@+id/action_seeTagFragment_to_tagListFragment"
+            app:destination="@id/tagListFragment" />
+        <argument
+            android:name="tagId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeTagFragment_to_editTagFragment"
+            app:destination="@id/editTagFragment" />
     </fragment>
 </navigation>

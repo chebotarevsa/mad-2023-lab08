@@ -45,14 +45,14 @@ class CardListFragment : Fragment() {
     }
 
     private val action = object : ActionInterface {
-        override fun onItemClick(cardId: String) {
+        override fun onItemClick(itemId: String) {
             val action = CardListFragmentDirections
-                .actionCardListFragmentToSeeCardFragment(cardId)
+                .actionCardListFragmentToSeeCardFragment(itemId)
             findNavController().navigate(action)
         }
 
-        override fun onDeleteCard(cardId: String) {
-            viewModel.deleteCard(cardId)
+        override fun onDeleteItem(itemId: String) {
+            viewModel.deleteCard(itemId)
         }
     }
 

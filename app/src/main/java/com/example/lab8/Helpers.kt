@@ -25,8 +25,8 @@ class Converters {
     }
 }
 interface ActionInterface {
-    fun onItemClick(cardId: String)
-    fun onDeleteCard(cardId: String)
+    fun onItemClick(itemId: String)
+    fun onDeleteItem(itemId: String)
 }
 fun Uri?.bitmap(context: Context): Bitmap? {
     return this?.let {

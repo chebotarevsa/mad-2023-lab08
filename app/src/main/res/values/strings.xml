@@ -4,6 +4,8 @@
     <string name="exampleField">Hint: %1$s</string>
     <string name="answerField">Answer: %1$s</string>
     <string name="translationField">Translation: %1$s</string>
+    <string name="tagNameField">Tag name: %1$s</string>
+    <string name="colorCodeField">Color code: %1$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_card_text">Edit card</string>
     <string name="enter_question_text">Enter question</string>

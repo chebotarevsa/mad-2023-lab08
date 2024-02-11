@@ -4,9 +4,13 @@ package com.example.lab8.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.lab8.data.db.Tag
 import com.example.lab8.domain.repository.TagRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
 
@@ -24,6 +28,17 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
                 return TagListViewModel(
                     TagRepository.getInstance(application)
                 ) as T
+            }
+        }
+    }
+
+    fun deleteTag(tagId: String) {
+        thread {
+            val tag = tags.value?.first { it.id == tagId }
+            tag?.let {
+                viewModelScope.launch(Dispatchers.IO) {
+                    tagRepository.delete(it)
+                }
             }
         }
     }

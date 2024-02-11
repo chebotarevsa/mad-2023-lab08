@@ -57,7 +57,7 @@ class CustomRecyclerAdapter(
                 .setTitle("Вы действительно хотите удалить карточку?").setMessage(
                     "Будет удалена карточка:" + "\n ${card.answer} / ${card.translation}"
                 ).setPositiveButton("Да") { _, _ ->
-                    action.onDeleteCard(card.id)
+                    action.onDeleteItem(card.id)
                 }
                 .setNegativeButton("Нет") { _, _ ->
                     Toast.makeText(
