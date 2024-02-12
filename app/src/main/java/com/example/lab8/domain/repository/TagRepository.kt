@@ -13,6 +13,8 @@ interface TagRepository {
 
     fun findByTagName(tagName: String): Tag
 
+    fun findByTagNameLike(tagName: String): LiveData<List<Tag>>
+
     suspend fun insert(tag: Tag)
 
     suspend fun insert(tags: List<Tag>)

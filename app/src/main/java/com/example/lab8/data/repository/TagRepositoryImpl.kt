@@ -18,6 +18,9 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
     override fun findByTagName(tagName: String): Tag =
         tagDao.findByTagName(tagName)
 
+    override fun findByTagNameLike(tagName: String): LiveData<List<Tag>> =
+        tagDao.findByTagNameLike(tagName)
+
 
     override suspend fun insert(tag: Tag) =
         tagDao.insert(tag)

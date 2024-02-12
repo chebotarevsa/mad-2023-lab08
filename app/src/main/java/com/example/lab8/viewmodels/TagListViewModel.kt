@@ -16,6 +16,20 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
 
     var tags: LiveData<List<Tag>> = tagRepository.findAll()
 
+    fun findTagsLike(tagName: String) {
+        tags = tagRepository.findByTagNameLike(tagName)
+    }
+    fun deleteTag(tagId: String) {
+        thread {
+            val tag = tags.value?.first { it.id == tagId }
+            tag?.let {
+                viewModelScope.launch(Dispatchers.IO) {
+                    tagRepository.delete(it)
+                }
+            }
+        }
+    }
+
     companion object {
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
@@ -28,17 +42,6 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
                 return TagListViewModel(
                     TagRepository.getInstance(application)
                 ) as T
-            }
-        }
-    }
-
-    fun deleteTag(tagId: String) {
-        thread {
-            val tag = tags.value?.first { it.id == tagId }
-            tag?.let {
-                viewModelScope.launch(Dispatchers.IO) {
-                    tagRepository.delete(it)
-                }
             }
         }
     }

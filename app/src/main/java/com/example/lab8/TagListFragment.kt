@@ -38,6 +38,12 @@ class TagListFragment : Fragment() {
             val action = TagListFragmentDirections.actionTagListFragmentToEditTagFragment("-1")
             findNavController().navigate(action)
         }
+        binding.searchButton.setOnClickListener {
+            viewModel.tags.observe(viewLifecycleOwner) {
+                viewModel.findTagsLike(binding.tagNameField.text.toString())
+                adapter.tags = it
+            }
+        }
         binding.backButton.setOnClickListener {
             val action = TagListFragmentDirections.actionTagListFragmentToCardListFragment()
             findNavController().navigate(action)

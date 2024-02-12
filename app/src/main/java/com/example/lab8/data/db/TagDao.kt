@@ -21,8 +21,12 @@ interface TagDao {
     @Delete
     fun delete(tag: Tag)
 
+
     @Query("SELECT * FROM tag WHERE tagName = :tagName")
     fun findByTagName(tagName: String): Tag
+
+    @Query("SELECT * FROM tag WHERE tagName LIKE :tagName")
+    fun findByTagNameLike(tagName: String): LiveData<List<Tag>>
 
     @Query("SELECT * FROM tag WHERE id = :id")
     fun findById(id: String): LiveData<Tag>
