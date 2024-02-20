@@ -1,14 +1,18 @@
 package com.example.lab8
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.lab8.data.db.Tag
 import com.example.lab8.databinding.FragmentEditCardBinding
 import com.example.lab8.viewmodels.EditCardViewModel
 
@@ -21,6 +25,7 @@ class EditCardFragment : Fragment() {
     private val args by navArgs<EditCardFragmentArgs>()
     private val cardId by lazy { args.cardId }
     private val viewModel: EditCardViewModel by viewModels { EditCardViewModel.Factory(cardId) }
+    private lateinit var spinner: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +53,33 @@ class EditCardFragment : Fragment() {
             getSystemContent.launch("image/*")
         }
 
+        spinner = binding.spinner
+
+        val adapter =
+            ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        viewModel.tagNames.observe(viewLifecycleOwner){
+            adapter.addAll(it)
+        }
+        spinner.adapter = adapter
+
+        var selectedTagName = ""
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                 selectedTagName = parent?.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Вызывается, когда ничего не выбрано
+            }
+        }
+
         binding.saveButton.setOnClickListener {
             val question =
                 binding.questionField.text.toString()
@@ -60,13 +92,14 @@ class EditCardFragment : Fragment() {
 
 
             val translation =
-
                 binding.translationField.text.toString()
-            viewModel.saveCard(question, example, answer, translation)
-            if (!viewModel.checkIfNewCard()){
-            val action = EditCardFragmentDirections.actionEditCardFragmentToSeeCardFragment(cardId)
-            findNavController().navigate(action)}
-            else{
+
+            viewModel.saveCard(question, example, answer, translation, selectedTagName)
+            if (!viewModel.checkIfNewCard()) {
+                val action =
+                    EditCardFragmentDirections.actionEditCardFragmentToSeeCardFragment(cardId)
+                findNavController().navigate(action)
+            } else {
                 val action = EditCardFragmentDirections.actionEditCardFragmentToCardListFragment()
                 findNavController().navigate(action)
             }

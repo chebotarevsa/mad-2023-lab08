@@ -11,6 +11,8 @@ import androidx.room.Update
 interface TagDao {
     @Query("SELECT * FROM tag")
     fun getAll(): LiveData<List<Tag>>
+    @Query("SELECT tagName FROM tag")
+    fun getAllNames(): LiveData<List<String>>
 
     @Insert
     fun insert(tag: Tag)

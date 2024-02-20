@@ -1,13 +1,17 @@
 package com.example.lab8
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.lab8.data.db.Tag
 import com.example.lab8.databinding.FragmentSeeCardBinding
 import com.example.lab8.viewmodels.SeeCardViewModel
 
@@ -35,6 +39,10 @@ class SeeCardFragment : Fragment() {
                 binding.cardImage.setImageResource(R.drawable.icon)
             }
         }
+        viewModel.tags.observe(viewLifecycleOwner){
+            it.forEach { tag -> addTagsToView(binding.cardTagsLayout, tag)  }
+            return@observe
+        }
         binding.editButton.setOnClickListener {
             val action = SeeCardFragmentDirections.actionSeeCardFragmentToEditCardFragment(cardId)
             findNavController().navigate(action)
@@ -45,6 +53,17 @@ class SeeCardFragment : Fragment() {
             findNavController().navigate(action)
         }
         return binding.root
+    }
+
+    fun addTagsToView(linearLayout: LinearLayout, tag: Tag){
+
+        val textView = TextView(requireContext())
+
+        textView.text = tag.tagName
+
+        textView.setBackgroundColor(Color.parseColor(tag.colorCode))
+
+        linearLayout.addView(textView)
     }
 
     override fun onDestroy() {

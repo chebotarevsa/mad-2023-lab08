@@ -10,6 +10,10 @@ import com.example.lab8.data.client.ImageClient
 import com.example.lab8.data.db.CardDao
 import com.example.lab8.data.db.CardDatabase
 import com.example.lab8.data.db.CardTable
+import com.example.lab8.data.db.CardTag
+import com.example.lab8.data.db.CardTagDao
+import com.example.lab8.data.db.Tag
+import com.example.lab8.data.db.TagDao
 import com.example.lab8.data.db.toDb
 import com.example.lab8.domain.entity.Card
 import com.example.lab8.domain.repository.CardRepository
@@ -17,11 +21,14 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Streaming
 import retrofit2.http.Url
+import java.util.UUID
 
 class CardRepositoryImpl private constructor(
     private val cardClient: CardClient,
     private val imageClient: ImageClient,
-    private val cardDao: CardDao
+    private val cardDao: CardDao,
+    private val tagDao: TagDao,
+    private val cardTagDao: CardTagDao
 ) : CardRepository {
 
     override suspend fun loadCards() {
@@ -48,8 +55,13 @@ class CardRepositoryImpl private constructor(
     @GET("api.json")
     override suspend fun getCards(): List<CardModel> =
         cardClient.getCards()
-    override suspend fun insert(card: Card) =
-        cardDao.insert(card.toDb())
+
+    override suspend fun insert(card: Card, tag: Tag) {
+        val cardTable = card.toDb()
+        tagDao.insert(tag)
+        cardDao.insert(cardTable)
+        cardTagDao.insert(CardTag(UUID.randomUUID().toString(), cardTable.id, tag.id))
+    }
 
     override suspend fun insert(cards: List<Card>) =
         cardDao.insert(cards.map { it.toDb() })
@@ -71,20 +83,29 @@ class CardRepositoryImpl private constructor(
     override fun findById(id: String): LiveData<Card> =
         cardDao.findById(id).map {
             Card(
-                id = it?.id ?: "empty" ,
+                id = it?.id ?: "empty",
                 question = it?.question ?: "",
-                example = it?.example?: "",
-                answer = it?.answer?: "",
-                translation = it?.translation?: "",
+                example = it?.example ?: "",
+                answer = it?.answer ?: "",
+                translation = it?.translation ?: "",
                 image = it?.image
             )
         }
 
-    override suspend fun update(card: Card): Int =
+    override suspend fun update(card: Card, tag: Tag) {
         cardDao.update(card.toDb())
+        tagDao.update(tag)
+    }
 
     override suspend fun delete(card: Card): Int =
         cardDao.delete(card.toDb())
+
+    override suspend fun getTagsForCard(cardId: String): LiveData<List<String>> =
+        cardTagDao.getTagsForCard(cardId)
+
+    override suspend fun getCardsWithTag(tagId: String): LiveData<List<String>> =
+        cardTagDao.getCardsWithTag(tagId)
+
 
     companion object {
 
@@ -96,7 +117,9 @@ class CardRepositoryImpl private constructor(
                 instance ?: CardRepositoryImpl(
                     CardClient.getInstance(baseUrl),
                     ImageClient.getInstance(baseUrl),
-                    CardDatabase.getInstance(application).cardDao()
+                    CardDatabase.getInstance(application).cardDao(),
+                    CardDatabase.getInstance(application).tagDao(),
+                    CardDatabase.getInstance(application).cardTagDao(),
                 )
                     .also {
                         instance = it

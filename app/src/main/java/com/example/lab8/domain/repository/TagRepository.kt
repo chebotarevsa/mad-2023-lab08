@@ -9,6 +9,7 @@ import com.example.lab8.data.repository.TagRepositoryImpl
 interface TagRepository {
 
     fun findAll(): LiveData<List<Tag>>
+    fun findAllNames(): LiveData<List<String>>
     fun delete(tag: Tag)
 
     fun findByTagName(tagName: String): Tag

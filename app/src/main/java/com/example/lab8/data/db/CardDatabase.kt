@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.lab8.Converters
 
-@Database(entities = [CardTable::class,Tag::class], version = 8)
+@Database(entities = [CardTable::class,Tag::class, CardTag::class], version = 10)
 @TypeConverters(Converters::class)
 abstract class CardDatabase : RoomDatabase() {
 
     abstract fun cardDao(): CardDao
     abstract fun tagDao(): TagDao
+    abstract fun cardTagDao(): CardTagDao
 
     companion object {
 

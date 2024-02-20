@@ -11,6 +11,10 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
     override fun findAll(): LiveData<List<Tag>> =
         tagDao.getAll()
 
+    override fun findAllNames(): LiveData<List<String>> =
+        tagDao.getAllNames()
+
+
     override fun delete(tag: Tag) =
         tagDao.delete(tag)
 

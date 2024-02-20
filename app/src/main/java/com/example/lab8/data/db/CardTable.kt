@@ -1,6 +1,7 @@
 package com.example.lab8.data.db
 
 import android.graphics.Bitmap
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.lab8.domain.entity.Card
@@ -13,7 +14,7 @@ data class CardTable(
     val example: String,
     val answer: String,
     val translation: String,
-    val image: Bitmap? = null
+    val image: Bitmap? = null,
 )
 
 fun Card.toDb(): CardTable =

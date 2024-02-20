@@ -9,15 +9,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.lab8.data.db.Tag
 import com.example.lab8.domain.entity.Card
 import com.example.lab8.domain.repository.CardRepository
+import com.example.lab8.domain.repository.TagRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class EditCardViewModel(private val cardRepository: CardRepository, val cardId: String) :
+class EditCardViewModel(
+    private val cardRepository: CardRepository,
+    private val tagRepository: TagRepository,
+    val cardId: String
+) :
     ViewModel() {
 
     private val _repoCard = cardRepository.findById(cardId)
+
+    val tagNames = tagRepository.findAllNames()
+
+//    private val tagNames = cardRepository.findById(cardId)
 
 
     private val _card = MediatorLiveData<Card>()
@@ -32,40 +43,59 @@ class EditCardViewModel(private val cardRepository: CardRepository, val cardId: 
             else _card.value = getEmptyCard()
         }
     }
+
     private fun getEmptyCard() =
         Card(question = "", example = "", translation = "", answer = "")
+
+
+//    suspend fun findAllTagNames(): List<String> {
+//        return withContext(Dispatchers.IO) {
+//            tagRepository.findAllNamesList()
+//        }
+//    }
 
     fun checkIfNewCard() = cardId == "-1"
 
 
     fun saveCard(
-        question: String, example: String, answer: String, translation: String
+        question: String,
+        example: String,
+        answer: String,
+        translation: String,
+        selectedTagName: String
     ) {
         val image = image.value
+        var selectedTag: Tag? = null
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedTag = tagRepository.findByTagName(selectedTagName)
+
+        }
         val newCard = card.value?.copy(
             question = question,
             example = example,
             answer = answer,
             translation = translation,
-            image = image
-        )
-        newCard?.let {
-            viewModelScope.launch {
-                if (checkIfNewCard()) {
-                    cardRepository.insert(it)
-                } else {
-                    cardRepository.update(it)
-                }
+            image = image,
+
+            )
+        viewModelScope.launch(Dispatchers.IO) {
+            if (checkIfNewCard()) {
+                selectedTag?.let { cardRepository.insert(newCard!!, it) }
+            } else {
+                selectedTag?.let { cardRepository.update(newCard!!, it) }
             }
         }
     }
+
     fun setImage(image: Bitmap?) {
         _image.value = image
     }
+
     override fun onCleared() {
         _card.removeSource(_repoCard)
         super.onCleared()
     }
+
     companion object {
 
         fun Factory(cardId: String): ViewModelProvider.Factory =
@@ -75,7 +105,11 @@ class EditCardViewModel(private val cardRepository: CardRepository, val cardId: 
                     modelClass: Class<T>, extras: CreationExtras
                 ): T {
                     val application = checkNotNull(extras[APPLICATION_KEY])
-                    return EditCardViewModel(CardRepository.getInstance(application), cardId) as T
+                    return EditCardViewModel(
+                        CardRepository.getInstance(application),
+                        TagRepository.getInstance(application),
+                        cardId
+                    ) as T
                 }
             }
     }
