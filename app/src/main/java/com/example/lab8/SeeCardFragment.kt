@@ -1,5 +1,6 @@
 package com.example.lab8
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,10 +59,29 @@ class SeeCardFragment : Fragment() {
         return binding.root
     }
 
+    private fun showDetachDialog(tag: Tag, textView: TextView) {
+        AlertDialog.Builder(requireContext())
+            .setIcon(android.R.drawable.ic_menu_delete)
+            .setTitle("Вы действительно хотите отвязать тэг от карточки?").setMessage(
+                "Будет отвязан тэг:" + "\n ${tag.tagName}"
+            ).setPositiveButton("Да") { _, _ ->
+                viewModel.detachTag(tag)
+                textView.visibility = View.GONE
+            }
+            .setNegativeButton("Нет") { _, _ ->
+                Toast.makeText(
+                    requireContext(), "Отвязывание тэга отменено", Toast.LENGTH_LONG
+                ).show()
+            }.show()
+    }
+
     private fun addTagsToView(linearLayout: LinearLayout, tag: Tag) {
         val textView = TextView(requireContext())
         textView.text = tag.tagName
         textView.setBackgroundColor(Color.parseColor(tag.colorCode))
+        textView.setOnClickListener {
+            showDetachDialog(tag, textView)
+        }
         linearLayout.addView(textView)
     }
 

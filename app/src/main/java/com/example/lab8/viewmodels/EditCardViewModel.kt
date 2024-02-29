@@ -41,7 +41,7 @@ class EditCardViewModel(
             if (!checkIfNewCard()) _card.value = it
             else _card.value = getEmptyCard()
         }
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             _tags = cardRepository.getTagsForCard(cardId)
         }
     }

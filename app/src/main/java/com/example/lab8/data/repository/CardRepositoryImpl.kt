@@ -69,8 +69,6 @@ class CardRepositoryImpl private constructor(
     override suspend fun update(card: Card, tag: Tag, tagsForCard: List<Tag>) {
         val cardTable = card.toDb()
         cardDao.update(cardTable)
-        Log.i("TagsForCard", tagsForCard.toString())
-        Log.i("Tag", tag.toString())
         if (!tagsForCard.contains(tag)) {
             cardTagDao.insert(CardTag(UUID.randomUUID().toString(), cardTable.id, tag.id))
         }

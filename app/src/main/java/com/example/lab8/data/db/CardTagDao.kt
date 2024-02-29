@@ -18,6 +18,9 @@ interface CardTagDao {
     @Query("DELETE FROM cardtag WHERE cardId = :cardId ")
     suspend fun deleteByCardId(cardId: String)
 
+    @Query("DELETE FROM cardtag WHERE tagId = :tagId ")
+    suspend fun deleteByTagId(tagId: String)
+
     @Query("SELECT tag.* FROM tag INNER JOIN cardTag ON tag.id = cardTag.tagId WHERE cardTag.cardId = :cardId")
     fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>>
 

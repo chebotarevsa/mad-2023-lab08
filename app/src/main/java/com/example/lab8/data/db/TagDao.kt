@@ -21,7 +21,7 @@ interface TagDao {
     suspend fun update(tag: Tag): Int
 
     @Delete
-    fun delete(tag: Tag)
+    suspend fun delete(tag: Tag)
 
 
     @Query("SELECT * FROM tag WHERE tagName = :tagName")

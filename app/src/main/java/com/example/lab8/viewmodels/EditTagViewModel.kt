@@ -32,13 +32,15 @@ class EditTagViewModel(private val tagRepository: TagRepository, val tagId: Stri
             findTagById()
         }
     }
+
     private suspend fun findTagById() {
         var tag: Tag? = null
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             tag = tagRepository.findById(tagId).value
         }
         _repoTag.postValue(tag!!)
     }
+
     private fun getEmptyTag() =
         Tag(tagName = "", colorCode = "#FFFFFF")
 
@@ -67,6 +69,7 @@ class EditTagViewModel(private val tagRepository: TagRepository, val tagId: Stri
         _tag.removeSource(_repoTag)
         super.onCleared()
     }
+
     companion object {
 
         fun Factory(tagId: String): ViewModelProvider.Factory =

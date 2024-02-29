@@ -1,6 +1,5 @@
 package com.example.lab8.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,18 +11,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SeeTagViewModel(private val tagRepository: TagRepository, private val tagId: String) : ViewModel() {
+class SeeTagViewModel(private val tagRepository: TagRepository, private val tagId: String) :
+    ViewModel() {
 
-     val tag = MutableLiveData<Tag>()
+    val tag = MutableLiveData<Tag>()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             findTagById()
         }
     }
+
     private suspend fun findTagById() {
         var _tag: Tag? = null
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             _tag = tagRepository.findById(tagId).value
         }
         tag.postValue(_tag!!)

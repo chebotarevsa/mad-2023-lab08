@@ -3,11 +3,12 @@ package com.example.lab8.data.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.lab8.data.db.CardDatabase
+import com.example.lab8.data.db.CardTagDao
 import com.example.lab8.data.db.Tag
 import com.example.lab8.data.db.TagDao
 import com.example.lab8.domain.repository.TagRepository
 
-class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRepository {
+class TagRepositoryImpl private constructor(private val tagDao: TagDao, private val cardTagDao: CardTagDao) : TagRepository {
     override fun findAll(): LiveData<List<Tag>> =
         tagDao.getAll()
 
@@ -15,8 +16,11 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
         tagDao.getAllNames()
 
 
-    override fun delete(tag: Tag) =
+    override suspend fun delete(tag: Tag) =
         tagDao.delete(tag)
+
+    override suspend fun detach(tag: Tag) =
+        cardTagDao.deleteByTagId(tag.id)
 
 
     override fun findByTagName(tagName: String): Tag =
@@ -49,7 +53,8 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
         fun getInstance(application: Application) =
             instance ?: synchronized(this) {
                 instance ?: TagRepositoryImpl(
-                    CardDatabase.getInstance(application).tagDao()
+                    CardDatabase.getInstance(application).tagDao(),
+                    CardDatabase.getInstance(application).cardTagDao()
                 )
                     .also {
                         instance = it

@@ -49,6 +49,9 @@
         <argument
             android:name="cardId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_seeCardFragment_self"
+            app:destination="@id/seeCardFragment" />
     </fragment>
     <fragment
         android:id="@+id/tagListFragment"

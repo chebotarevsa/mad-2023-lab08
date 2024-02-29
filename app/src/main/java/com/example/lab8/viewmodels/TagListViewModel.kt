@@ -19,6 +19,7 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
     fun findTagsLike(tagName: String) {
         tags = tagRepository.findByTagNameLike(tagName)
     }
+
     fun deleteTag(tagId: String) {
         thread {
             val tag = tags.value?.first { it.id == tagId }
