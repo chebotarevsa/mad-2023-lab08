@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class EditTagViewModel(private val tagRepository: TagRepository, val tagId: String) :
     ViewModel() {
 
-    private val _repoTag = MutableLiveData<Tag>()
+    private val _repoTag = tagRepository.findById(tagId)
 
     private val _tag = MediatorLiveData<Tag>()
 
@@ -28,19 +28,7 @@ class EditTagViewModel(private val tagRepository: TagRepository, val tagId: Stri
             if (!checkIfNewTag()) _tag.value = it
             else _tag.value = getEmptyTag()
         }
-        viewModelScope.launch(Dispatchers.IO) {
-            findTagById()
-        }
     }
-
-    private suspend fun findTagById() {
-        var tag: Tag? = null
-        viewModelScope.launch(Dispatchers.IO) {
-            tag = tagRepository.findById(tagId).value
-        }
-        _repoTag.postValue(tag!!)
-    }
-
     private fun getEmptyTag() =
         Tag(tagName = "", colorCode = "#FFFFFF")
 

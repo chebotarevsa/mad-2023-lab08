@@ -22,7 +22,7 @@ interface TagRepository {
 
     suspend fun insert(tags: List<Tag>)
 
-    suspend fun findById(id: String): LiveData<Tag>
+    fun findById(id: String): LiveData<Tag>
 
     suspend fun update(tag: Tag): Int
 
