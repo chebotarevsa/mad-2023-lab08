@@ -15,8 +15,15 @@ interface CardTagDao {
     @Delete
     suspend fun delete(cardTag: CardTag)
 
-    @Query("SELECT tagId FROM cardTag WHERE cardId = :cardId")
-    fun getTagsForCard(cardId: String): LiveData<List<String>>
+    @Query("DELETE FROM cardtag WHERE cardId = :cardId ")
+    suspend fun deleteByCardId(cardId: String)
+
+    @Query("SELECT tag.* FROM tag INNER JOIN cardTag ON tag.id = cardTag.tagId WHERE cardTag.cardId = :cardId")
+    fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>>
+
+    @Query("SELECT tag.* FROM tag INNER JOIN cardTag ON tag.id = cardTag.tagId WHERE cardTag.cardId = :cardId")
+    suspend fun  getTagsForCard(cardId: String): List<Tag>
+
 
     @Query("SELECT cardId FROM cardTag WHERE tagId = :tagId")
     fun getCardsWithTag(tagId: String): LiveData<List<String>>

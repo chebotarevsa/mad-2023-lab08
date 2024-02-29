@@ -1,39 +1,24 @@
 package com.example.lab8.viewmodels
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.lab8.data.db.Tag
 import com.example.lab8.domain.entity.Card
 import com.example.lab8.domain.repository.CardRepository
 import com.example.lab8.domain.repository.TagRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class SeeCardViewModel(
-    cardRepository: CardRepository,
-    tagRepository: TagRepository,
-    cardId: String
+    private val cardRepository: CardRepository,
+    private val tagRepository: TagRepository,
+    private val cardId: String
 ) : ViewModel() {
 
     val card: LiveData<Card> = cardRepository.findById(cardId)
-
-    private var _tags = MutableLiveData<MutableList<Tag>>()
-    val tags: LiveData<MutableList<Tag>> = _tags
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val tagIdsForCard = cardRepository.getTagsForCard(cardId).value
-            tagIdsForCard?.forEach { tagId ->
-                tagRepository.findById(tagId).value?.let { _tags.value?.add(it) }
-            }
-        }
-    }
+    private var _tags = cardRepository.getTagsForCardWithLiveData(cardId)
+    val tags: LiveData<List<Tag>> = _tags
 
     companion object {
 

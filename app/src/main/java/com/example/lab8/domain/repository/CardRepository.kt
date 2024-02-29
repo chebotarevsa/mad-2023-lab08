@@ -3,7 +3,6 @@ package com.example.lab8.domain.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.lab8.data.client.CardModel
-import com.example.lab8.data.db.CardTag
 import com.example.lab8.data.db.Tag
 import com.example.lab8.data.repository.CardRepositoryImpl
 import com.example.lab8.domain.entity.Card
@@ -16,7 +15,7 @@ interface CardRepository {
 
     suspend fun getCards(): List<CardModel>
 
-    suspend fun insert(card: Card,tag: Tag)
+    suspend fun insert(card: Card, tag: Tag)
 
     suspend fun insert(cards: List<Card>)
 
@@ -24,14 +23,15 @@ interface CardRepository {
 
     fun findById(id: String): LiveData<Card>
 
-    suspend fun update(card: Card, tag: Tag)
+    suspend fun update(card: Card, tag: Tag, tagsForCard: List<Tag>)
 
-    suspend fun delete(card: Card): Int
+    suspend fun delete(card: Card)
 
-    suspend fun getCardsWithTag(tagId: String): LiveData<List<String>>
+    suspend fun getCardsWithTagWithLiveData(tagId: String): LiveData<List<String>>
 
-    suspend fun getTagsForCard(cardId: String): LiveData<List<String>>
+    fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>>
 
+    suspend fun getTagsForCard(cardId: String): List<Tag>
     companion object {
 
         fun getInstance(application: Application): CardRepository {

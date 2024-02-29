@@ -28,8 +28,7 @@ class EditCardViewModel(
 
     val tagNames = tagRepository.findAllNames()
 
-//    private val tagNames = cardRepository.findById(cardId)
-
+    private var _tags = listOf<Tag>()
 
     private val _card = MediatorLiveData<Card>()
     val card: LiveData<Card> = _card
@@ -42,17 +41,13 @@ class EditCardViewModel(
             if (!checkIfNewCard()) _card.value = it
             else _card.value = getEmptyCard()
         }
+        viewModelScope.launch(Dispatchers.IO){
+            _tags = cardRepository.getTagsForCard(cardId)
+        }
     }
 
     private fun getEmptyCard() =
         Card(question = "", example = "", translation = "", answer = "")
-
-
-//    suspend fun findAllTagNames(): List<String> {
-//        return withContext(Dispatchers.IO) {
-//            tagRepository.findAllNamesList()
-//        }
-//    }
 
     fun checkIfNewCard() = cardId == "-1"
 
@@ -82,7 +77,7 @@ class EditCardViewModel(
             if (checkIfNewCard()) {
                 selectedTag?.let { cardRepository.insert(newCard!!, it) }
             } else {
-                selectedTag?.let { cardRepository.update(newCard!!, it) }
+                selectedTag?.let { cardRepository.update(newCard!!, it, _tags) }
             }
         }
     }

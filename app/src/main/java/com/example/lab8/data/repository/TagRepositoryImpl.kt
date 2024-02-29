@@ -34,7 +34,7 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao) : TagRep
         TODO("Not yet implemented")
     }
 
-    override fun findById(id: String): LiveData<Tag> =
+    override suspend fun findById(id: String): LiveData<Tag> =
         tagDao.findById(id)
 
 

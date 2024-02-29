@@ -2,6 +2,7 @@ package com.example.lab8.data.repository
 
 import android.app.Application
 import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.lab8.data.client.CardClient
@@ -58,13 +59,23 @@ class CardRepositoryImpl private constructor(
 
     override suspend fun insert(card: Card, tag: Tag) {
         val cardTable = card.toDb()
-        tagDao.insert(tag)
         cardDao.insert(cardTable)
         cardTagDao.insert(CardTag(UUID.randomUUID().toString(), cardTable.id, tag.id))
     }
 
     override suspend fun insert(cards: List<Card>) =
         cardDao.insert(cards.map { it.toDb() })
+
+    override suspend fun update(card: Card, tag: Tag, tagsForCard: List<Tag>) {
+        val cardTable = card.toDb()
+        cardDao.update(cardTable)
+        Log.i("TagsForCard", tagsForCard.toString())
+        Log.i("Tag", tag.toString())
+        if (!tagsForCard.contains(tag)) {
+            cardTagDao.insert(CardTag(UUID.randomUUID().toString(), cardTable.id, tag.id))
+        }
+    }
+
 
     override fun findAll(): LiveData<List<Card>> =
         cardDao.findAll().map {
@@ -92,18 +103,18 @@ class CardRepositoryImpl private constructor(
             )
         }
 
-    override suspend fun update(card: Card, tag: Tag) {
-        cardDao.update(card.toDb())
-        tagDao.update(tag)
+
+    override suspend fun delete(card: Card) {
+        cardDao.delete(card.toDb())
+        cardTagDao.deleteByCardId(card.id)
     }
 
-    override suspend fun delete(card: Card): Int =
-        cardDao.delete(card.toDb())
-
-    override suspend fun getTagsForCard(cardId: String): LiveData<List<String>> =
+    override fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>> =
+        cardTagDao.getTagsForCardWithLiveData(cardId)
+    override suspend fun getTagsForCard(cardId: String): List<Tag> =
         cardTagDao.getTagsForCard(cardId)
 
-    override suspend fun getCardsWithTag(tagId: String): LiveData<List<String>> =
+    override suspend fun getCardsWithTagWithLiveData(tagId: String): LiveData<List<String>> =
         cardTagDao.getCardsWithTag(tagId)
 
 
