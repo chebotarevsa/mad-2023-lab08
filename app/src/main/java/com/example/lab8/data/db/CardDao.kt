@@ -24,8 +24,11 @@ interface CardDao {
     fun findById(id: String): LiveData<CardTable?>
 
     @Update
-    suspend fun update(cardTable: CardTable): Int
+    fun update(cardTable: CardTable): Int
 
     @Delete
     suspend fun delete(cardTable: CardTable): Int
+
+    @Query("SELECT * FROM cardTable WHERE id IN (SELECT cardId FROM cardTag WHERE tagId IN (SELECT id FROM tag WHERE tagName LIKE :tagName))")
+    fun findCardsByTagName(tagName: String): LiveData<List<CardTable>>
 }

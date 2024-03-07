@@ -9,12 +9,43 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagNameField"
+        tools:listitem="@layout/recycler_item" />
+
+    <EditText
+        android:id="@+id/tagNameField"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_tag_name_text"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:minLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/recycler_item" />
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/search_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025"
+        app:maxImageSize="32sp"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addbuttonid"

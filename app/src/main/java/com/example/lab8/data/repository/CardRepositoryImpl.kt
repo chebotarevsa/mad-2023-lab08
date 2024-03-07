@@ -2,7 +2,6 @@ package com.example.lab8.data.repository
 
 import android.app.Application
 import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.lab8.data.client.CardClient
@@ -69,9 +68,7 @@ class CardRepositoryImpl private constructor(
     override suspend fun update(card: Card, tag: Tag, tagsForCard: List<Tag>) {
         val cardTable = card.toDb()
         cardDao.update(cardTable)
-        if (!tagsForCard.contains(tag)) {
-            cardTagDao.insert(CardTag(UUID.randomUUID().toString(), cardTable.id, tag.id))
-        }
+        cardTagDao.insert(CardTag(UUID.randomUUID().toString(), card.id, tag.id))
     }
 
 
@@ -109,8 +106,24 @@ class CardRepositoryImpl private constructor(
 
     override fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>> =
         cardTagDao.getTagsForCardWithLiveData(cardId)
+
     override suspend fun getTagsForCard(cardId: String): List<Tag> =
         cardTagDao.getTagsForCard(cardId)
+
+    override fun findCardsByTagNameLike(tagName: String): LiveData<List<Card>> =
+        cardDao.findCardsByTagName(tagName).map {
+            it.map {
+                Card(
+                    id = it.id,
+                    question = it.question,
+                    example = it.example,
+                    answer = it.answer,
+                    translation = it.translation,
+                    image = it.image
+                )
+            }
+        }
+
 
     override suspend fun getCardsWithTagWithLiveData(tagId: String): LiveData<List<String>> =
         cardTagDao.getCardsWithTag(tagId)

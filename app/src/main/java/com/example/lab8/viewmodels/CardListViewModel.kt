@@ -33,6 +33,10 @@ class CardListViewModel(private val cardRepository: CardRepository) : ViewModel(
         }
     }
 
+    fun findCardsWithTagsLike(tagName: String) {
+        cards = cardRepository.findCardsByTagNameLike(tagName)
+    }
+
     companion object {
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {

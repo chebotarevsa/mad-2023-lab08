@@ -27,11 +27,16 @@ class CardListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = CustomRecyclerAdapter(action).apply {
             viewModel.cards.observe(viewLifecycleOwner) {
-                viewModel.getCardsFromServerIfEmpty()
                 cards = it
             }
         }
         recyclerView.adapter = adapter
+        binding.searchButton.setOnClickListener {
+            viewModel.cards.observe(viewLifecycleOwner) {
+                viewModel.findCardsWithTagsLike(binding.tagNameField.text.toString())
+                adapter.cards = it
+            }
+        }
         binding.addbuttonid.setOnClickListener {
             val action = CardListFragmentDirections.actionCardListFragmentToEditCardFragment("-1")
             findNavController().navigate(action)

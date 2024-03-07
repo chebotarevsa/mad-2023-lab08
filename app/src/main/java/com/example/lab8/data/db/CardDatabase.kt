@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.lab8.Converters
 
-@Database(entities = [CardTable::class,Tag::class, CardTag::class], version = 10)
+@Database(entities = [CardTable::class,Tag::class, CardTag::class], version = 11)
 @TypeConverters(Converters::class)
 abstract class CardDatabase : RoomDatabase() {
 

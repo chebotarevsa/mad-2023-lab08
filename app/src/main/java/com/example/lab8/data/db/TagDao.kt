@@ -11,6 +11,7 @@ import androidx.room.Update
 interface TagDao {
     @Query("SELECT * FROM tag")
     fun getAll(): LiveData<List<Tag>>
+
     @Query("SELECT tagName FROM tag")
     fun getAllNames(): LiveData<List<String>>
 
@@ -22,7 +23,6 @@ interface TagDao {
 
     @Delete
     suspend fun delete(tag: Tag)
-
 
     @Query("SELECT * FROM tag WHERE tagName = :tagName")
     fun findByTagName(tagName: String): Tag

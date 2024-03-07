@@ -32,6 +32,8 @@ interface CardRepository {
     fun getTagsForCardWithLiveData(cardId: String): LiveData<List<Tag>>
 
     suspend fun getTagsForCard(cardId: String): List<Tag>
+    fun findCardsByTagNameLike(tagName: String): LiveData<List<Card>>
+
     companion object {
 
         fun getInstance(application: Application): CardRepository {
