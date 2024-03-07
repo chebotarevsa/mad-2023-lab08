@@ -1,6 +1,7 @@
 package com.example.lab8
 
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lab8.adapters.TagsAdapter
 import com.example.lab8.databinding.FragmentTagListBinding
 import com.example.lab8.viewmodels.TagListViewModel
+import com.google.gson.Gson
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class TagListFragment : Fragment() {
@@ -47,6 +52,23 @@ class TagListFragment : Fragment() {
         binding.backButton.setOnClickListener {
             val action = TagListFragmentDirections.actionTagListFragmentToCardListFragment()
             findNavController().navigate(action)
+        }
+        binding.saveToFileButton.setOnClickListener{
+            val gson = Gson()
+            val jsonTags = gson.toJson(viewModel.tags.value)
+            val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            val file = File(directory, "tags.json")
+
+            try {
+                FileOutputStream(file).use { outputStream ->
+                    outputStream.write(jsonTags.toByteArray())
+                }
+                // Файл сохранен успешно
+            } catch (e: IOException) {
+                e.printStackTrace()
+                // Произошла ошибка сохранения файла
+            }
+
         }
         return binding.root
 
