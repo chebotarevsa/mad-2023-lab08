@@ -54,6 +54,9 @@ class TagListFragment : Fragment() {
                 adapter.tags = it
             }
         }
+        binding.deleteAllTagsButton.setOnClickListener {
+            viewModel.tags.value?.let { it1 -> viewModel.deleteTags(it1) }
+        }
         binding.backButton.setOnClickListener {
             val action = TagListFragmentDirections.actionTagListFragmentToCardListFragment()
             findNavController().navigate(action)

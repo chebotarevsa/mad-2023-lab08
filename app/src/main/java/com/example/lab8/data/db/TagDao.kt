@@ -27,6 +27,9 @@ interface TagDao {
     @Delete
     suspend fun delete(tag: Tag)
 
+    @Delete
+    suspend fun delete(tags: List<Tag>)
+
     @Query("SELECT * FROM tag WHERE tagName = :tagName")
     fun findByTagName(tagName: String): Tag
 

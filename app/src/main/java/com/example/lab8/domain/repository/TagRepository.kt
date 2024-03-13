@@ -25,6 +25,7 @@ interface TagRepository {
     fun findById(id: String): LiveData<Tag>
 
     suspend fun update(tag: Tag): Int
+    suspend fun delete(tags: List<Tag>)
 
 
     companion object {

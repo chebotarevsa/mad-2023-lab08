@@ -37,6 +37,12 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
         }
     }
 
+    fun deleteTags(tags: List<Tag>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            tagRepository.delete(tags)
+        }
+    }
+
     companion object {
 
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {

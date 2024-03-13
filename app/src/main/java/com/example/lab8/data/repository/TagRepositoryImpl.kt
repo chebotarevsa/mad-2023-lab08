@@ -19,6 +19,9 @@ class TagRepositoryImpl private constructor(private val tagDao: TagDao, private 
     override suspend fun delete(tag: Tag) =
         tagDao.delete(tag)
 
+    override suspend fun delete(tags: List<Tag>) =
+        tagDao.delete(tags)
+
     override suspend fun detach(tag: Tag) =
         cardTagDao.deleteByTagId(tag.id)
 
