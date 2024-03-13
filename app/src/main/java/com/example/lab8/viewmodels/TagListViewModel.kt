@@ -20,6 +20,12 @@ class TagListViewModel(private val tagRepository: TagRepository) : ViewModel() {
         tags = tagRepository.findByTagNameLike(tagName)
     }
 
+    fun saveTags(tags: List<Tag>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            tagRepository.insert(tags)
+        }
+    }
+
     fun deleteTag(tagId: String) {
         thread {
             val tag = tags.value?.first { it.id == tagId }

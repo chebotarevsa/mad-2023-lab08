@@ -28,9 +28,9 @@
         android:minLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintVertical_bias="0.035" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,23 +44,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025"
-        app:maxImageSize="32sp"
-        />
+        app:maxImageSize="32sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveToFileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:rotation="270"
         android:src="@drawable/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintVertical_bias="0.65"
         app:maxImageSize="32sp"
-        android:rotation="270"
+
         />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/readFromFileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:maxImageSize="32sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addbuttonid"
@@ -73,8 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.95"
-        app:maxImageSize="32sp"
-        />
+        app:maxImageSize="32sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/backButton"

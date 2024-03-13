@@ -5,17 +5,22 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab8.adapters.TagsAdapter
+import com.example.lab8.data.db.Tag
 import com.example.lab8.databinding.FragmentTagListBinding
 import com.example.lab8.viewmodels.TagListViewModel
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
+import java.io.FileReader
 import java.io.IOException
 
 
@@ -53,22 +58,36 @@ class TagListFragment : Fragment() {
             val action = TagListFragmentDirections.actionTagListFragmentToCardListFragment()
             findNavController().navigate(action)
         }
-        binding.saveToFileButton.setOnClickListener{
-            val gson = Gson()
+        val gson = Gson()
+        binding.saveToFileButton.setOnClickListener {
             val jsonTags = gson.toJson(viewModel.tags.value)
-            val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            val directory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
             val file = File(directory, "tags.json")
 
             try {
                 FileOutputStream(file).use { outputStream ->
                     outputStream.write(jsonTags.toByteArray())
                 }
-                // Файл сохранен успешно
+                Toast.makeText(requireContext(), "Tags are exported", Toast.LENGTH_SHORT).show()
             } catch (e: IOException) {
                 e.printStackTrace()
-                // Произошла ошибка сохранения файла
             }
+        }
+        binding.readFromFileButton.setOnClickListener {
+            try {
+                val directory =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                val file = File(directory, "tags.json")
 
+                val br = BufferedReader(FileReader(file))
+                val listType = object : TypeToken<List<Tag>>() {}.type
+                val tagsList: List<Tag> = gson.fromJson(br, listType)
+                viewModel.saveTags(tagsList)
+                Toast.makeText(requireContext(), "Tags are imported", Toast.LENGTH_SHORT).show()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
         return binding.root
 
@@ -85,6 +104,7 @@ class TagListFragment : Fragment() {
             viewModel.deleteTag(itemId)
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

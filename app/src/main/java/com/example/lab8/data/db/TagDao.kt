@@ -18,6 +18,9 @@ interface TagDao {
     @Insert
     fun insert(tag: Tag)
 
+    @Insert
+    fun insert(tags: List<Tag>)
+
     @Update
     suspend fun update(tag: Tag): Int
 
