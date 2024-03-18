@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardListFragment">
+
+    <fragment
+        android:id="@+id/cardListFragment"
+        android:name="com.example.lab8.CardListFragment"
+        android:label="fragment_card_list"
+        tools:layout="@layout/fragment_card_list" >
+        <action
+            android:id="@+id/action_cardListFragment_to_seeCardFragment"
+            app:destination="@id/seeCardFragment" />
+        <action
+            android:id="@+id/action_cardListFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+        <action
+            android:id="@+id/action_cardListFragment_to_tagListFragment"
+            app:destination="@id/tagListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="com.example.lab8.EditCardFragment"
+        android:label="fragment_edit_card"
+        tools:layout="@layout/fragment_edit_card" >
+        <action
+            android:id="@+id/action_editCardFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+        <action
+            android:id="@+id/action_editCardFragment_to_seeCardFragment"
+            app:destination="@id/seeCardFragment" />
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeCardFragment"
+        android:name="com.example.lab8.SeeCardFragment"
+        android:label="fragment_see_card"
+        tools:layout="@layout/fragment_see_card" >
+        <action
+            android:id="@+id/action_seeCardFragment_to_editCardFragment"
+            app:destination="@id/editCardFragment" />
+        <action
+            android:id="@+id/action_seeCardFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeCardFragment_self"
+            app:destination="@id/seeCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tagListFragment"
+        android:name="com.example.lab8.TagListFragment"
+        android:label="fragment_tag_list"
+        tools:layout="@layout/fragment_tag_list" >
+        <action
+            android:id="@+id/action_tagListFragment_to_cardListFragment"
+            app:destination="@id/cardListFragment" />
+        <action
+            android:id="@+id/action_tagListFragment_to_editTagFragment"
+            app:destination="@id/editTagFragment" />
+        <action
+            android:id="@+id/action_tagListFragment_to_seeTagFragment"
+            app:destination="@id/seeTagFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTagFragment"
+        android:name="com.example.lab8.EditTagFragment"
+        android:label="EditTagFragment" >
+        <action
+            android:id="@+id/action_editTagFragment_to_tagListFragment"
+            app:destination="@id/tagListFragment" />
+        <argument
+            android:name="tagId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeTagFragment"
+        android:name="com.example.lab8.SeeTagFragment"
+        android:label="fragment_see_tag"
+        tools:layout="@layout/fragment_see_tag" >
+        <action
+            android:id="@+id/action_seeTagFragment_to_tagListFragment"
+            app:destination="@id/tagListFragment" />
+        <argument
+            android:name="tagId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seeTagFragment_to_editTagFragment"
+            app:destination="@id/editTagFragment" />
+    </fragment>
+</navigation>
